@@ -1,0 +1,17 @@
+@import './fonts.css';
+@import './colors.css';
+@import './typography.css';
+@import './spacing.css';
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; }
+a { color: inherit; }

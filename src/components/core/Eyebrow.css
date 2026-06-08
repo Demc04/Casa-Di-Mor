@@ -1,0 +1,7 @@
+.cdm-eyebrow{
+  font-family: var(--font-sans); font-weight:500; text-transform:uppercase;
+  font-size: var(--text-eyebrow); letter-spacing: var(--tracking-eyebrow);
+  color: var(--text-muted); line-height:1; display:inline-block;
+}
+.cdm-eyebrow--accent{ color: var(--accent-strong); }
+.cdm-eyebrow--light{ color: var(--text-on-dark-muted); }

@@ -1,0 +1,8 @@
+.cdm-divider{ border:0; height:1px; background: var(--hairline); width:100%; }
+.cdm-divider--light{ background: var(--hairline-on-dark); }
+.cdm-divider-labelled{ display:flex; align-items:center; gap: var(--space-4); width:100%; }
+.cdm-divider-labelled > .cdm-divider{ flex:1; }
+.cdm-divider-labelled > .cdm-divider-label{
+  font-family: var(--font-sans); text-transform:uppercase; letter-spacing:.24em;
+  font-size:.62rem; color: var(--text-muted); white-space:nowrap;
+}

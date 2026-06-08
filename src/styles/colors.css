@@ -1,0 +1,86 @@
+/* ============================================================
+   Casa Di Mor — Color
+   ------------------------------------------------------------
+   Brand palette (confirmed HEX from the brand book):
+     Espresso  #42270f   Sand  #c0ad99
+     Powder    #b0c2e1   Ivory #f2ede6
+
+   Casa Di Mor is "una casa luminosa y sofisticada" — luminous,
+   soft, warm. The system is built on warm neutrals (ivory paper,
+   sand) anchored by espresso ink, with powder blue as the single
+   cool accent. Imagery skews warm B&W and golden-hour light.
+   ============================================================ */
+
+:root {
+  /* ---- Espresso (brand ink / deep warm chocolate) ---- */
+  --espresso-950: #1d1006;
+  --espresso-900: #28160a;
+  --espresso-800: #351e0c;
+  --espresso-700: #42270f; /* brand base */
+  --espresso-600: #5a3a1d;
+  --espresso-500: #74502e;
+  --espresso-400: #946b43;
+
+  /* ---- Sand (warm taupe neutral) ---- */
+  --sand-100: #f0e9e0;
+  --sand-200: #e4d9cb;
+  --sand-300: #d4c4b2;
+  --sand-400: #c0ad99; /* brand base */
+  --sand-500: #a8927c;
+  --sand-600: #8c7765;
+
+  /* ---- Powder (cool accent) ---- */
+  --powder-100: #e7edf6;
+  --powder-200: #d2dcee;
+  --powder-300: #b0c2e1; /* brand base */
+  --powder-400: #93a9d3;
+  --powder-500: #748ebc;
+
+  /* ---- Ivory / paper (luminous surfaces) ---- */
+  --ivory: #f2ede6;      /* brand base */
+  --paper: #faf7f2;      /* lightest warm white */
+  --shell: #ebe3d8;      /* deeper ivory */
+  --porcelain: #ffffff;  /* true white, used sparingly for product cut-outs */
+
+  /* ---- Functional, kept muted and on-brand ---- */
+  --success: #6f7d5e;    /* sage */
+  --danger:  #9a5b4e;    /* terracotta */
+  --info:    var(--powder-500);
+
+  /* ============================================================
+     Semantic aliases — reference these in components & layouts
+     ============================================================ */
+
+  /* Surfaces */
+  --bg: var(--paper);
+  --surface-page: var(--paper);
+  --surface-raised: var(--ivory);
+  --surface-card: var(--porcelain);
+  --surface-sunken: var(--shell);
+  --surface-inverse: var(--espresso-700);
+  --surface-accent: var(--powder-100);
+
+  /* Text */
+  --text-strong: var(--espresso-900);
+  --text-body: var(--espresso-700);
+  --text-muted: var(--espresso-500);
+  --text-faint: var(--sand-600);
+  --text-on-dark: var(--ivory);
+  --text-on-dark-muted: var(--sand-300);
+  --text-accent: var(--powder-500);
+
+  /* Lines & borders (hairline, luxury) */
+  --border-strong: var(--espresso-700);
+  --border: var(--sand-300);
+  --border-soft: var(--sand-200);
+  --hairline: color-mix(in oklab, var(--espresso-700) 14%, transparent);
+  --hairline-on-dark: color-mix(in oklab, var(--ivory) 22%, transparent);
+
+  /* Accent */
+  --accent: var(--powder-300);
+  --accent-strong: var(--powder-500);
+  --accent-on: var(--espresso-900);
+
+  /* Focus ring */
+  --focus-ring: color-mix(in oklab, var(--powder-500) 55%, transparent);
+}

@@ -1,0 +1,9 @@
+.cdm-tag{
+  font-family: var(--font-sans); display:inline-flex; align-items:center; gap:.5em;
+  text-transform:uppercase; letter-spacing:.16em; font-weight:500; font-size:.62rem;
+  padding:.5em .85em; border-radius: var(--radius-pill); line-height:1; white-space:nowrap;
+}
+.cdm-tag--solid{ background: var(--espresso-700); color: var(--text-on-dark); }
+.cdm-tag--soft{ background: var(--surface-accent); color: var(--accent-strong); }
+.cdm-tag--outline{ background:transparent; color: var(--text-body); border:1px solid var(--border); }
+.cdm-tag--sand{ background: var(--sand-200); color: var(--espresso-800); }

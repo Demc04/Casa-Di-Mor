@@ -1,0 +1,13 @@
+.bq-coll-head{ text-align:center; padding: var(--space-8) 0 var(--space-6); }
+.bq-coll-head h1{ font-family: var(--font-serif); font-weight:400; font-size: clamp(2.4rem,5vw,3.4rem);
+  color: var(--text-strong); margin: 10px 0 0; }
+.bq-coll-head p{ font-family: var(--font-sans); font-weight:300; color: var(--text-muted); margin: 14px auto 0; max-width: 48ch; line-height:1.7; }
+.bq-filters{ display:flex; justify-content:center; gap: 10px; margin-top: 28px; }
+.bq-filter{ font-family: var(--font-sans); text-transform:uppercase; letter-spacing:.18em; font-size:.64rem;
+  font-weight:500; color: var(--text-muted); background:transparent; border:1px solid var(--border);
+  border-radius: var(--radius-pill); padding:.6em 1.3em; cursor:pointer;
+  transition: all var(--dur) var(--ease-out); }
+.bq-filter:hover{ color: var(--text-strong); border-color: var(--espresso-400); }
+.bq-filter.is-active{ background: var(--espresso-700); color: var(--text-on-dark); border-color: var(--espresso-700); }
+.bq-coll-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 26px 22px; padding-bottom: var(--space-9); }
+@media (max-width: 860px){ .bq-coll-grid{ grid-template-columns:1fr 1fr; } }

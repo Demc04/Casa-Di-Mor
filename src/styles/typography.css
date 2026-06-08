@@ -1,0 +1,111 @@
+/* ============================================================
+   Casa Di Mor — Typography
+   ------------------------------------------------------------
+   Two voices:
+   • Serif (Libre Baskerville ≈ Baskerville Old Face) — names,
+     editorial display, the wordmark. Quiet, classical, high
+     contrast. Often set in mixed case ("casa di Mor") or as
+     large editorial titles.
+   • Sans (Jost) — body copy, UI, and the brand's signature
+     letter-spaced uppercase eyebrows ("P A L E T A").
+   ============================================================ */
+
+:root {
+  /* Families */
+  --font-serif: 'Libre Baskerville', 'Baskerville Old Face', 'Baskerville', Georgia, serif;
+  --font-sans: 'Jost', 'Futura', 'Century Gothic', system-ui, sans-serif;
+  /* Decorative copperplate accent — Maison Privée, collection names, citations.
+     Use ONLY for short accents, never body or headings. Falls back to an
+     italic serif so it stays intentional where the script can't load. */
+  --font-script: 'Pinyon Script', 'Cormorant Garamond', 'Snell Roundhand', cursive;
+
+  /* Weights */
+  --fw-light: 300;     /* @kind font */
+  --fw-regular: 400;   /* @kind font */
+  --fw-medium: 500;    /* @kind font */
+  --fw-semibold: 600;  /* @kind font */
+  --fw-bold: 700;      /* @kind font */
+
+  /* ---- Display & heading scale (serif) ---- */
+  --text-display: 4.5rem;   /* hero editorial */
+  --text-h1: 3.25rem;
+  --text-h2: 2.375rem;
+  --text-h3: 1.75rem;
+  --text-h4: 1.3125rem;
+
+  /* ---- Body scale (sans) ---- */
+  --text-lead: 1.25rem;     /* intro paragraphs */
+  --text-base: 1rem;
+  --text-sm: 0.875rem;
+  --text-xs: 0.75rem;
+
+  /* ---- Eyebrow / label (letter-spaced caps) ---- */
+  --text-eyebrow: 0.75rem;
+
+  /* Line heights */
+  --leading-tight: 1.08;    /* display */
+  --leading-snug: 1.2;      /* headings */
+  --leading-normal: 1.6;    /* body */
+  --leading-relaxed: 1.75;
+
+  /* Letter spacing */
+  --tracking-display: -0.01em;
+  --tracking-tight: -0.005em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.08em;
+  --tracking-eyebrow: 0.28em;  /* the brand's spaced caps */
+  --tracking-wordmark: 0.04em;
+}
+
+/* ------------------------------------------------------------
+   Optional helper classes (components reference variables
+   directly; these are conveniences for specimens & layouts)
+   ------------------------------------------------------------ */
+.cdm-display {
+  font-family: var(--font-serif);
+  font-weight: var(--fw-regular);
+  font-size: var(--text-display);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--text-strong);
+}
+.cdm-h1 { font-family: var(--font-serif); font-weight: var(--fw-regular); font-size: var(--text-h1); line-height: var(--leading-snug); letter-spacing: var(--tracking-tight); color: var(--text-strong); }
+.cdm-h2 { font-family: var(--font-serif); font-weight: var(--fw-regular); font-size: var(--text-h2); line-height: var(--leading-snug); color: var(--text-strong); }
+.cdm-h3 { font-family: var(--font-serif); font-weight: var(--fw-regular); font-size: var(--text-h3); line-height: var(--leading-snug); color: var(--text-strong); }
+
+.cdm-lead {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-light);
+  font-size: var(--text-lead);
+  line-height: var(--leading-relaxed);
+  color: var(--text-body);
+}
+.cdm-body {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-body);
+}
+.cdm-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-medium);
+  font-size: var(--text-eyebrow);
+  line-height: 1;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.cdm-wordmark {
+  font-family: var(--font-serif);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-wordmark);
+  color: var(--text-strong);
+}
+.cdm-script {
+  font-family: var(--font-script);
+  font-weight: var(--fw-regular);
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--text-strong);
+}

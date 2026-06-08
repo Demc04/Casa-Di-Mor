@@ -1,0 +1,21 @@
+/* ============================================================
+   Casa Di Mor — Webfonts
+   ------------------------------------------------------------
+   Titles use Baskerville Old Face in the brand source. The
+   nearest freely-hostable match is Libre Baskerville (Google
+   Fonts) — see readme.md "Type substitution" note.
+
+   Body / labels use Jost, a refined geometric grotesque that
+   carries the brand's letter-spaced display caps cleanly.
+
+   Script accent uses Pinyon Script (a fine copperplate) for
+   couture moments — Maison Privée, collection names, citations.
+   Cormorant Garamond italic is loaded as its graceful fallback
+   for any pipeline that can't render the script.
+
+   Loaded from Google Fonts so any consumer that links styles.css
+   gets the faces. Individual HTML specimens also include the
+   matching <link> tags for resilience.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:ital@1&family=Pinyon+Script&display=swap');
