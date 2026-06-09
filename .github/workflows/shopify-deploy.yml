@@ -1,0 +1,106 @@
+name: Deploy Casa Di Mor brand to Shopify
+
+on:
+  push:
+    branches:
+      - main
+      - claude/cool-ramanujan-cRgPH
+    paths:
+      - 'shopify-theme/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SHOPIFY_STORE: "8tqdhx-pb.myshopify.com"
+      SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Find live (main) theme
+        id: theme
+        run: |
+          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            "https://$SHOPIFY_STORE/admin/api/2024-01/themes.json")
+          theme_id=$(echo "$response" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+for theme in data.get('themes', []):
+    if theme.get('role') == 'main':
+        print(theme['id'])
+        break
+")
+          if [ -z "$theme_id" ]; then
+            echo "Could not find live theme. Response was:"
+            echo "$response"
+            exit 1
+          fi
+          echo "theme_id=$theme_id" >> "$GITHUB_OUTPUT"
+          echo "Live theme ID: $theme_id"
+
+      - name: Upload brand CSS asset
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          content_b64=$(base64 -w 0 shopify-theme/assets/casa-di-mor-brand.css)
+          payload=$(python3 -c "
+import json
+print(json.dumps({
+    'asset': {
+        'key': 'assets/casa-di-mor-brand.css',
+        'attachment': '''$content_b64'''
+    }
+}))
+")
+          curl -s -X PUT \
+            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "https://$SHOPIFY_STORE/admin/api/2024-01/themes/$theme_id/assets.json"
+
+      - name: Upload fonts snippet
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          content_b64=$(base64 -w 0 shopify-theme/snippets/casa-di-mor-fonts.liquid)
+          payload=$(python3 -c "
+import json
+print(json.dumps({
+    'asset': {
+        'key': 'snippets/casa-di-mor-fonts.liquid',
+        'attachment': '''$content_b64'''
+    }
+}))
+")
+          curl -s -X PUT \
+            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "https://$SHOPIFY_STORE/admin/api/2024-01/themes/$theme_id/assets.json"
+
+      - name: Inject fonts snippet into theme.liquid
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            "https://$SHOPIFY_STORE/admin/api/2024-01/themes/$theme_id/assets.json?asset[key]=layout/theme.liquid")
+
+          current=$(echo "$response" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])")
+
+          if echo "$current" | grep -q "casa-di-mor-fonts"; then
+            echo "Snippet already referenced in theme.liquid, skipping injection."
+            exit 0
+          fi
+
+          updated=$(echo "$current" | sed "s#</head>#{% render 'casa-di-mor-fonts' %}\n</head>#")
+
+          payload=$(python3 -c "
+import sys, json
+content = sys.stdin.read()
+print(json.dumps({'asset': {'key': 'layout/theme.liquid', 'value': content}}))
+" <<< "$updated")
+
+          curl -s -X PUT \
+            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "https://$SHOPIFY_STORE/admin/api/2024-01/themes/$theme_id/assets.json"

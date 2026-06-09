@@ -1,0 +1,301 @@
+/* ============================================================
+   Casa Di Mor — Brand override for Shopify Dawn theme
+   ------------------------------------------------------------
+   Mediterranean "old money" aesthetic: Espresso / Sand / Powder
+   / Ivory palette, Libre Baskerville + Jost typography, square
+   corners as a brand standard (no rounded radii anywhere).
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:ital@1&family=Pinyon+Script&display=swap');
+
+:root {
+  /* ---- Casa Di Mor brand tokens ---- */
+  --cdm-espresso: #42270f;
+  --cdm-espresso-900: #28160a;
+  --cdm-espresso-600: #5a3a1d;
+  --cdm-sand: #c0ad99;
+  --cdm-sand-200: #e4d9cb;
+  --cdm-powder: #b0c2e1;
+  --cdm-powder-400: #93a9d3;
+  --cdm-ivory: #f2ede6;
+  --cdm-paper: #faf7f2;
+  --cdm-shell: #ebe3d8;
+
+  --cdm-font-serif: 'Libre Baskerville', Georgia, serif;
+  --cdm-font-sans: 'Jost', Helvetica, Arial, sans-serif;
+  --cdm-font-script: 'Pinyon Script', 'Cormorant Garamond', cursive;
+
+  --cdm-ease-out: cubic-bezier(.16,1,.3,1);
+  --cdm-dur: 200ms;
+  --cdm-dur-slow: 420ms;
+  --cdm-radius: 0px;
+
+  /* ---- Dawn theme variable overrides (RGB triples, no rgb()/#) ---- */
+  --color-base-text: 66, 39, 15;
+  --color-base-background-1: 250, 247, 242;
+  --color-base-background-2: 242, 237, 230;
+  --color-base-accent-1: 66, 39, 15;
+  --color-base-accent-2: 176, 194, 225;
+  --color-base-solid-button-labels: 242, 237, 230;
+  --color-base-outline-button-labels: 66, 39, 15;
+  --color-base-border: 192, 173, 153;
+}
+
+/* ---- Base typography ---- */
+body,
+.body-typography,
+.shopify-section,
+table,
+input,
+textarea,
+select,
+button {
+  font-family: var(--cdm-font-sans);
+  font-weight: 300;
+  letter-spacing: .01em;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.heading,
+.banner__heading,
+.product__title,
+.collection__title,
+.card__heading {
+  font-family: var(--cdm-font-serif);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--cdm-espresso-900);
+}
+
+/* ---- Eyebrows / badges / labels: letter-spaced uppercase ---- */
+.badge,
+.product__text.caption,
+.product-form__label,
+.collapsible-content__heading,
+.list-menu__item,
+.header__menu-item,
+.announcement-bar__message,
+.customer .field label,
+.cart-item__name + .product-option,
+.facets__label,
+.facets__summary {
+  font-family: var(--cdm-font-sans);
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-weight: 400;
+}
+
+/* ---- Square corners everywhere: brand standard ---- */
+.button,
+button,
+input,
+select,
+textarea,
+.field__input,
+.select__select,
+.card,
+.card__inner,
+.card__media,
+.media,
+.product__media,
+.swatch,
+.swatch-input__input + .swatch,
+.color-swatch,
+img,
+.badge,
+.popover,
+.disclosure__list-wrapper,
+.modal__content,
+.drawer,
+.quantity {
+  border-radius: var(--cdm-radius) !important;
+}
+
+/* ---- Buttons ---- */
+.button,
+button.button,
+.shopify-payment-button__button {
+  font-family: var(--cdm-font-sans);
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-size: .72rem;
+  font-weight: 400;
+  border-width: 1px;
+  transition: letter-spacing var(--cdm-dur) var(--cdm-ease-out),
+              background-color var(--cdm-dur) var(--cdm-ease-out),
+              color var(--cdm-dur) var(--cdm-ease-out);
+}
+
+.button:hover,
+button.button:hover {
+  letter-spacing: .26em;
+}
+
+.button--primary,
+.shopify-payment-button__button--unbranded {
+  background: var(--cdm-espresso);
+  color: var(--cdm-ivory);
+  border-color: var(--cdm-espresso);
+}
+
+.button--primary:hover {
+  background: var(--cdm-espresso-900);
+  border-color: var(--cdm-espresso-900);
+}
+
+.button--secondary {
+  background: transparent;
+  color: var(--cdm-espresso);
+  border-color: var(--cdm-sand);
+}
+
+.button--secondary:hover {
+  border-color: var(--cdm-espresso);
+}
+
+/* ---- Inputs / forms ---- */
+.field__input,
+.select__select,
+.customer textarea,
+.customer input {
+  font-family: var(--cdm-font-sans);
+  border-color: var(--cdm-sand);
+  background: var(--cdm-paper);
+}
+
+.field__input:focus,
+.select__select:focus {
+  border-color: var(--cdm-espresso);
+  box-shadow: none;
+}
+
+/* ---- Header / navigation ---- */
+.header,
+.section-header {
+  background: var(--cdm-paper);
+  border-bottom: 1px solid var(--cdm-sand-200);
+}
+
+.header__heading-link,
+.header__heading-logo-wrapper {
+  font-family: var(--cdm-font-serif);
+}
+
+.header__menu-item {
+  font-size: .68rem;
+  color: var(--cdm-espresso);
+}
+
+.header__menu-item:hover {
+  color: var(--cdm-espresso-600);
+}
+
+.announcement-bar {
+  background: var(--cdm-espresso);
+  color: var(--cdm-ivory);
+}
+
+/* ---- Footer ---- */
+.footer {
+  background: var(--cdm-espresso);
+  color: var(--cdm-ivory);
+}
+
+.footer h2,
+.footer .h3,
+.footer__heading {
+  font-family: var(--cdm-font-serif);
+  color: var(--cdm-ivory);
+}
+
+.footer a,
+.footer__list-social .icon {
+  color: var(--cdm-sand-200);
+}
+
+.footer a:hover {
+  color: var(--cdm-ivory);
+}
+
+.footer-block__newsletter input {
+  background: transparent;
+  border-color: var(--cdm-sand);
+  color: var(--cdm-ivory);
+}
+
+.footer-block__newsletter input::placeholder {
+  color: var(--cdm-sand-200);
+}
+
+/* ---- Product cards ---- */
+.card,
+.card-wrapper {
+  background: transparent;
+}
+
+.card__media,
+.media {
+  background: var(--cdm-shell);
+}
+
+.card__media img,
+.media img {
+  transition: transform var(--cdm-dur-slow) var(--cdm-ease-out);
+}
+
+.card-wrapper:hover .card__media img {
+  transform: scale(1.04);
+}
+
+.card__heading a,
+.card__information .card__heading {
+  font-family: var(--cdm-font-serif);
+  color: var(--cdm-espresso-900);
+}
+
+.price,
+.price__regular,
+.price__sale {
+  font-family: var(--cdm-font-sans);
+  font-weight: 400;
+  letter-spacing: .04em;
+  color: var(--cdm-espresso);
+}
+
+/* ---- Color swatches: square ---- */
+.color-swatch,
+.swatch,
+.swatch-input__input + .swatch {
+  border-radius: 0 !important;
+  border-color: var(--cdm-sand);
+}
+
+/* ---- Dividers ---- */
+hr,
+.shopify-section + .shopify-section,
+.section-template--divider {
+  border-color: var(--cdm-sand-200);
+}
+
+/* ---- Facets / filters ---- */
+.facets,
+.facets-vertical {
+  font-family: var(--cdm-font-sans);
+}
+
+.facets__summary {
+  border-color: var(--cdm-sand-200);
+}
+
+/* ---- Newsletter ---- */
+.newsletter-form__field-wrapper .field__input {
+  background: var(--cdm-paper);
+  border-color: var(--cdm-sand);
+}
+
+/* ---- Drawers / modals ---- */
+.drawer,
+.modal__content {
+  background: var(--cdm-paper);
+}
