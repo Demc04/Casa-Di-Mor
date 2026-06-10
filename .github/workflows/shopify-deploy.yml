@@ -15,6 +15,7 @@ jobs:
     env:
       SHOPIFY_STORE: "8tqdhx-pb.myshopify.com"
       SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+      SHOPIFY_API_BASE: "https://theme-kit-access.shopifyapps.com/cli/admin/api/2024-01"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,7 +23,7 @@ jobs:
       - name: Find live (main) theme
         id: theme
         run: |
-          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" "https://$SHOPIFY_STORE/admin/api/2024-01/themes.json")
+          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes.json")
           theme_id=$(echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); ids = [t['id'] for t in data.get('themes', []) if t.get('role') == 'main']; print(ids[0] if ids else '')")
           if [ -z "$theme_id" ]; then
             echo "Could not find live theme. Response was:"
@@ -39,9 +40,10 @@ jobs:
           payload=$(python3 -c "import json, sys; print(json.dumps({'asset': {'key': 'assets/casa-di-mor-brand.css', 'attachment': sys.argv[1]}}))" "$content_b64")
           curl -s -X PUT \
             -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
             -H "Content-Type: application/json" \
             -d "$payload" \
-            "https://$SHOPIFY_STORE/admin/api/2024-01/themes/$theme_id/assets.json"
+            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json"
 
       - name: Upload fonts snippet
         run: |
@@ -50,14 +52,15 @@ jobs:
           payload=$(python3 -c "import json, sys; print(json.dumps({'asset': {'key': 'snippets/casa-di-mor-fonts.liquid', 'attachment': sys.argv[1]}}))" "$content_b64")
           curl -s -X PUT \
             -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
             -H "Content-Type: application/json" \
             -d "$payload" \
-            "https://$SHOPIFY_STORE/admin/api/2024-01/themes/$theme_id/assets.json"
+            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json"
 
       - name: Inject fonts snippet into theme.liquid
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
-          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" "https://$SHOPIFY_STORE/admin/api/2024-01/themes/$theme_id/assets.json?asset[key]=layout/theme.liquid")
+          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=layout/theme.liquid")
 
           current=$(echo "$response" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])")
 
@@ -72,6 +75,7 @@ jobs:
 
           curl -s -X PUT \
             -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
             -H "Content-Type: application/json" \
             -d "$payload" \
-            "https://$SHOPIFY_STORE/admin/api/2024-01/themes/$theme_id/assets.json"
+            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json"
