@@ -87,14 +87,32 @@ jobs:
             -d "$payload" \
             "$SHOPIFY_API_BASE/themes/$theme_id/assets.json"
 
-      - name: Add Verano Eterno section to home page
+      - name: Replace home page with single Verano Eterno section
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
           response=$(curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/index.json")
 
           current=$(echo "$response" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])")
 
-          updated=$(python3 -c "import json, sys; data = json.loads(sys.stdin.read()); key = 'casa_di_mor_verano_eterno'; data['sections'][key] = data['sections'].get(key, {'type': 'casa-di-mor-verano-eterno', 'settings': {}}); order = data.get('order', []); order.append(key) if key not in order else None; data['order'] = order; print(json.dumps(data))" <<< "$current")
+          cat > /tmp/merge_index.py << 'EOF'
+          import json, sys
+          data = json.loads(sys.stdin.read())
+          key = 'casa_di_mor_verano_eterno'
+          section = {'type': 'casa-di-mor-verano-eterno', 'settings': {}}
+          section['settings'].update({
+              'collection': 'all',
+              'hero_image': 'shopify://shop_images/Tezza-7633.jpg',
+              'split_image_1': 'shopify://shop_images/Tezza-1677.jpg',
+              'split_eyebrow_1': 'Atelier',
+              'split_title_1': 'Premium materials and hand-selected finishing touches',
+              'split_image_2': 'shopify://shop_images/Vestido_blanco.jpg',
+          })
+          data['sections'] = {key: section}
+          data['order'] = [key]
+          print(json.dumps(data))
+          EOF
+
+          updated=$(python3 /tmp/merge_index.py <<< "$current")
 
           payload=$(python3 -c "import sys, json; content = sys.stdin.read(); print(json.dumps({'asset': {'key': 'templates/index.json', 'value': content}}))" <<< "$updated")
 
@@ -110,9 +128,3 @@ jobs:
             cat /tmp/response.json
             echo
           fi
-
-      - name: Debug - dump index.json structure
-        run: |
-          theme_id="${{ steps.theme.outputs.theme_id }}"
-          response=$(curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/index.json")
-          echo "$response" | python3 -c "import sys, json; data = json.loads(json.load(sys.stdin)['asset']['value']); print(json.dumps(data, indent=2, ensure_ascii=False))"
