@@ -13,13 +13,18 @@
   --cdm-espresso: #42270f;
   --cdm-espresso-900: #28160a;
   --cdm-espresso-600: #5a3a1d;
+  --cdm-espresso-500: #74502e;
   --cdm-sand: #c0ad99;
   --cdm-sand-200: #e4d9cb;
+  --cdm-sand-300: #d4c4b2;
   --cdm-powder: #b0c2e1;
   --cdm-powder-400: #93a9d3;
+  --cdm-powder-500: #748ebc;
   --cdm-ivory: #f2ede6;
   --cdm-paper: #faf7f2;
   --cdm-shell: #ebe3d8;
+  --cdm-porcelain: #ffffff;
+  --cdm-hairline: rgba(66, 39, 15, .14);
 
   --cdm-font-serif: 'Libre Baskerville', Georgia, serif;
   --cdm-font-sans: 'Jost', Helvetica, Arial, sans-serif;

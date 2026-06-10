@@ -1,0 +1,267 @@
+{{ 'casa-di-mor-verano-eterno.css' | asset_url | stylesheet_tag }}
+
+<div class="cdm-ve">
+
+  {%- comment -%} ---- Hero ---- {%- endcomment -%}
+  <div class="cdm-ve-hero">
+    <div class="cdm-ve-figure cdm-ve-figure--hero">
+      {%- if section.settings.hero_image -%}
+        <img class="cdm-ve-figure__img" src="{{ section.settings.hero_image | image_url: width: 1800 }}" alt="{{ section.settings.hero_title | escape }}" loading="eager">
+      {%- else -%}
+        <img class="cdm-ve-figure__img" src="{{ 'cdm-editorial-sea-gown.jpg' | asset_url }}" alt="{{ section.settings.hero_title | escape }}" loading="eager">
+      {%- endif -%}
+      <div class="cdm-ve-figure__scrim"></div>
+      <div class="cdm-ve-figure__content">
+        {%- if section.settings.hero_eyebrow != blank -%}
+          <span class="cdm-ve-figure__eyebrow">{{ section.settings.hero_eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.hero_title != blank -%}
+          <p class="cdm-ve-figure__title">{{ section.settings.hero_title }}</p>
+        {%- endif -%}
+        {%- if section.settings.hero_subtitle != blank -%}
+          <p class="cdm-ve-figure__sub">{{ section.settings.hero_subtitle }}</p>
+        {%- endif -%}
+        {%- if section.settings.hero_button_label != blank -%}
+          <div style="margin-top: 10px;">
+            <a href="{{ section.settings.hero_button_link | default: '#' }}" class="button button--primary">{{ section.settings.hero_button_label }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ---- Statement / purpose ---- {%- endcomment -%}
+  <section class="cdm-ve-section cdm-ve-wrap">
+    <div class="cdm-ve-statement">
+      {%- if section.settings.statement_image -%}
+        <img class="cdm-ve-seal" src="{{ section.settings.statement_image | image_url: width: 264 }}" alt="Casa Di Mor">
+      {%- else -%}
+        <img class="cdm-ve-seal" src="{{ 'cdm-key-espresso.png' | asset_url }}" alt="Casa Di Mor">
+      {%- endif -%}
+      {%- if section.settings.statement_eyebrow != blank -%}
+        <span class="cdm-ve-eyebrow">{{ section.settings.statement_eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.statement_text != blank -%}
+        <p class="cdm-ve-quote">{{ section.settings.statement_text }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- comment -%} ---- Capsule / product grid ---- {%- endcomment -%}
+  <section class="cdm-ve-section cdm-ve-wrap" style="padding-top: 0;">
+    <div class="cdm-ve-sec-head">
+      <div>
+        {%- if section.settings.capsule_script != blank -%}
+          <div class="cdm-ve-script">{{ section.settings.capsule_script }}</div>
+        {%- endif -%}
+        {%- if section.settings.capsule_title != blank -%}
+          <h2>{{ section.settings.capsule_title }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.collection != blank -%}
+        <a class="cdm-ve-link" href="{{ section.settings.collection.url }}">Ver todo</a>
+      {%- endif -%}
+    </div>
+    <div class="cdm-ve-grid">
+      {%- if section.settings.collection != blank -%}
+        {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+          <a class="cdm-ve-card" href="{{ product.url }}">
+            <div class="cdm-ve-card__media">
+              {%- if product.featured_image -%}
+                <img class="cdm-ve-card__img" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}" loading="lazy">
+              {%- endif -%}
+              {%- if product.tags contains 'Nuevo' -%}
+                <span class="cdm-ve-card__tag">Nuevo</span>
+              {%- endif -%}
+            </div>
+            <div class="cdm-ve-card__body">
+              <div class="cdm-ve-card__name">{{ product.title }}</div>
+              <div class="cdm-ve-card__price">{{ product.price | money }}</div>
+            </div>
+          </a>
+        {%- else -%}
+          <p>{{ 'general.search.no_results' | t }}</p>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- comment -%} ---- Editorial split ---- {%- endcomment -%}
+  <section class="cdm-ve-wrap">
+    <div class="cdm-ve-split">
+      <div class="cdm-ve-figure cdm-ve-figure--portrait">
+        {%- if section.settings.split_image_1 -%}
+          <img class="cdm-ve-figure__img" src="{{ section.settings.split_image_1 | image_url: width: 1200 }}" alt="{{ section.settings.split_title_1 | escape }}" loading="lazy">
+        {%- else -%}
+          <img class="cdm-ve-figure__img" src="{{ 'cdm-editorial-beach-group.jpg' | asset_url }}" alt="{{ section.settings.split_title_1 | escape }}" loading="lazy">
+        {%- endif -%}
+        <div class="cdm-ve-figure__scrim" style="background: linear-gradient(to top, rgba(34,28,23,.55), rgba(34,28,23,.2));"></div>
+        <div class="cdm-ve-figure__content">
+          {%- if section.settings.split_eyebrow_1 != blank -%}
+            <span class="cdm-ve-figure__eyebrow">{{ section.settings.split_eyebrow_1 }}</span>
+          {%- endif -%}
+          {%- if section.settings.split_title_1 != blank -%}
+            <p class="cdm-ve-figure__title">{{ section.settings.split_title_1 }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="cdm-ve-figure cdm-ve-figure--portrait">
+        {%- if section.settings.split_image_2 -%}
+          <img class="cdm-ve-figure__img" src="{{ section.settings.split_image_2 | image_url: width: 1200 }}" alt="{{ section.settings.split_title_2 | escape }}" loading="lazy">
+        {%- else -%}
+          <img class="cdm-ve-figure__img" src="{{ 'cdm-lifestyle-garden.jpg' | asset_url }}" alt="{{ section.settings.split_title_2 | escape }}" loading="lazy">
+        {%- endif -%}
+        <div class="cdm-ve-figure__scrim" style="background: linear-gradient(to top, rgba(34,28,23,.55), rgba(34,28,23,.2));"></div>
+        <div class="cdm-ve-figure__content">
+          {%- if section.settings.split_eyebrow_2 != blank -%}
+            <span class="cdm-ve-figure__eyebrow">{{ section.settings.split_eyebrow_2 }}</span>
+          {%- endif -%}
+          {%- if section.settings.split_title_2 != blank -%}
+            <p class="cdm-ve-figure__title">{{ section.settings.split_title_2 }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Casa Di Mor — Verano Eterno",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagen del hero"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow",
+      "default": "Colección 2026"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Título",
+      "default": "Verano eterno"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Subtítulo",
+      "default": "Lo suave, lo esencial y lo eterno en lo cotidiano."
+    },
+    {
+      "type": "text",
+      "id": "hero_button_label",
+      "label": "Texto del botón",
+      "default": "Descubrir la colección"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Propósito"
+    },
+    {
+      "type": "image_picker",
+      "id": "statement_image",
+      "label": "Sello / imagen de marca"
+    },
+    {
+      "type": "text",
+      "id": "statement_eyebrow",
+      "label": "Eyebrow",
+      "default": "Propósito"
+    },
+    {
+      "type": "textarea",
+      "id": "statement_text",
+      "label": "Texto",
+      "default": "Que cada prenda sea una inversión, y no un gasto — liberando la frescura y el estilo atemporal de quien la porta."
+    },
+    {
+      "type": "header",
+      "content": "Cápsula Verano Eterno"
+    },
+    {
+      "type": "text",
+      "id": "capsule_script",
+      "label": "Texto script",
+      "default": "la cápsula"
+    },
+    {
+      "type": "text",
+      "id": "capsule_title",
+      "label": "Título",
+      "default": "Verano Eterno"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Productos a mostrar",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Editorial"
+    },
+    {
+      "type": "image_picker",
+      "id": "split_image_1",
+      "label": "Imagen 1"
+    },
+    {
+      "type": "text",
+      "id": "split_eyebrow_1",
+      "label": "Eyebrow 1",
+      "default": "Editorial"
+    },
+    {
+      "type": "text",
+      "id": "split_title_1",
+      "label": "Título 1",
+      "default": "La luz que ya existe en ti"
+    },
+    {
+      "type": "image_picker",
+      "id": "split_image_2",
+      "label": "Imagen 2"
+    },
+    {
+      "type": "text",
+      "id": "split_eyebrow_2",
+      "label": "Eyebrow 2",
+      "default": "Atelier"
+    },
+    {
+      "type": "text",
+      "id": "split_title_2",
+      "label": "Título 2",
+      "default": "Maestría del detalle"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Casa Di Mor — Verano Eterno"
+    }
+  ]
+}
+{% endschema %}

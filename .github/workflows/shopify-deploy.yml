@@ -33,29 +33,31 @@ jobs:
           echo "theme_id=$theme_id" >> "$GITHUB_OUTPUT"
           echo "Target theme ID: $theme_id"
 
-      - name: Upload brand CSS asset
+      - name: Upload theme assets
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
-          content_b64=$(base64 -w 0 shopify-theme/assets/casa-di-mor-brand.css)
-          payload=$(python3 -c "import json, sys; print(json.dumps({'asset': {'key': 'assets/casa-di-mor-brand.css', 'attachment': sys.argv[1]}}))" "$content_b64")
-          curl -s -X PUT \
-            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
-            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
-            -H "Content-Type: application/json" \
-            -d "$payload" \
-            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json"
-
-      - name: Upload fonts snippet
-        run: |
-          theme_id="${{ steps.theme.outputs.theme_id }}"
-          content_b64=$(base64 -w 0 shopify-theme/snippets/casa-di-mor-fonts.liquid)
-          payload=$(python3 -c "import json, sys; print(json.dumps({'asset': {'key': 'snippets/casa-di-mor-fonts.liquid', 'attachment': sys.argv[1]}}))" "$content_b64")
-          curl -s -X PUT \
-            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
-            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
-            -H "Content-Type: application/json" \
-            -d "$payload" \
-            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json"
+          declare -A files=(
+            ["shopify-theme/assets/casa-di-mor-brand.css"]="assets/casa-di-mor-brand.css"
+            ["shopify-theme/assets/casa-di-mor-verano-eterno.css"]="assets/casa-di-mor-verano-eterno.css"
+            ["shopify-theme/assets/cdm-editorial-sea-gown.jpg"]="assets/cdm-editorial-sea-gown.jpg"
+            ["shopify-theme/assets/cdm-editorial-beach-group.jpg"]="assets/cdm-editorial-beach-group.jpg"
+            ["shopify-theme/assets/cdm-lifestyle-garden.jpg"]="assets/cdm-lifestyle-garden.jpg"
+            ["shopify-theme/assets/cdm-key-espresso.png"]="assets/cdm-key-espresso.png"
+            ["shopify-theme/snippets/casa-di-mor-fonts.liquid"]="snippets/casa-di-mor-fonts.liquid"
+            ["shopify-theme/sections/casa-di-mor-verano-eterno.liquid"]="sections/casa-di-mor-verano-eterno.liquid"
+          )
+          for src in "${!files[@]}"; do
+            key="${files[$src]}"
+            echo "Uploading $key"
+            content_b64=$(base64 -w 0 "$src")
+            payload=$(python3 -c "import json, sys; print(json.dumps({'asset': {'key': sys.argv[1], 'attachment': sys.argv[2]}}))" "$key" "$content_b64")
+            curl -s -X PUT \
+              -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+              -H "X-Shopify-Shop: $SHOPIFY_STORE" \
+              -H "Content-Type: application/json" \
+              -d "$payload" \
+              "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /dev/null -w "  -> %{http_code}\n"
+          done
 
       - name: Inject fonts snippet into theme.liquid
         run: |
@@ -79,3 +81,21 @@ jobs:
             -H "Content-Type: application/json" \
             -d "$payload" \
             "$SHOPIFY_API_BASE/themes/$theme_id/assets.json"
+
+      - name: Add Verano Eterno section to home page
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          response=$(curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/index.json")
+
+          current=$(echo "$response" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])")
+
+          updated=$(python3 -c "import json, sys; data = json.loads(sys.stdin.read()); key = 'casa_di_mor_verano_eterno'; data['sections'][key] = data['sections'].get(key, {'type': 'casa-di-mor-verano-eterno', 'settings': {}}); order = data.get('order', []); order.append(key) if key not in order else None; data['order'] = order; print(json.dumps(data))" <<< "$current")
+
+          payload=$(python3 -c "import sys, json; content = sys.stdin.read(); print(json.dumps({'asset': {'key': 'templates/index.json', 'value': content}}))" <<< "$updated")
+
+          curl -s -X PUT \
+            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /dev/null -w "  -> %{http_code}\n"
