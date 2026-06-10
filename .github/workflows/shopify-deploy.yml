@@ -60,7 +60,7 @@ jobs:
       - name: Inject fonts snippet into theme.liquid
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
-          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=layout/theme.liquid")
+          response=$(curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=layout/theme.liquid")
 
           current=$(echo "$response" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])")
 
