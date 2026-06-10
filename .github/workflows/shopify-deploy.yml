@@ -50,12 +50,18 @@ jobs:
             key="${files[$src]}"
             echo "Uploading $key"
             python3 -c "import json, base64, sys; key, src = sys.argv[1], sys.argv[2]; data = open(src, 'rb').read(); json.dump({'asset': {'key': key, 'attachment': base64.b64encode(data).decode()}}, open('/tmp/payload.json', 'w'))" "$key" "$src"
-            curl -s -X PUT \
+            http_code=$(curl -s -X PUT \
               -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
               -H "X-Shopify-Shop: $SHOPIFY_STORE" \
               -H "Content-Type: application/json" \
               --data-binary @/tmp/payload.json \
-              "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /dev/null -w "  -> %{http_code}\n"
+              "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /tmp/response.json -w "%{http_code}")
+            echo "  -> $http_code"
+            if [ "$http_code" != "200" ]; then
+              echo "  Error response:"
+              cat /tmp/response.json
+              echo
+            fi
           done
 
       - name: Inject fonts snippet into theme.liquid
@@ -92,9 +98,15 @@ jobs:
 
           payload=$(python3 -c "import sys, json; content = sys.stdin.read(); print(json.dumps({'asset': {'key': 'templates/index.json', 'value': content}}))" <<< "$updated")
 
-          curl -s -X PUT \
+          http_code=$(curl -s -X PUT \
             -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
             -H "X-Shopify-Shop: $SHOPIFY_STORE" \
             -H "Content-Type: application/json" \
             -d "$payload" \
-            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /dev/null -w "  -> %{http_code}\n"
+            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /tmp/response.json -w "%{http_code}")
+          echo "  -> $http_code"
+          if [ "$http_code" != "200" ]; then
+            echo "  Error response:"
+            cat /tmp/response.json
+            echo
+          fi
