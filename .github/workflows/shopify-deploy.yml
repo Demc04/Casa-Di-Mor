@@ -49,13 +49,12 @@ jobs:
           for src in "${!files[@]}"; do
             key="${files[$src]}"
             echo "Uploading $key"
-            content_b64=$(base64 -w 0 "$src")
-            payload=$(python3 -c "import json, sys; print(json.dumps({'asset': {'key': sys.argv[1], 'attachment': sys.argv[2]}}))" "$key" "$content_b64")
+            python3 -c "import json, base64, sys; key, src = sys.argv[1], sys.argv[2]; data = open(src, 'rb').read(); json.dump({'asset': {'key': key, 'attachment': base64.b64encode(data).decode()}}, open('/tmp/payload.json', 'w'))" "$key" "$src"
             curl -s -X PUT \
               -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
               -H "X-Shopify-Shop: $SHOPIFY_STORE" \
               -H "Content-Type: application/json" \
-              -d "$payload" \
+              --data-binary @/tmp/payload.json \
               "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /dev/null -w "  -> %{http_code}\n"
           done
 
