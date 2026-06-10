@@ -110,3 +110,9 @@ jobs:
             cat /tmp/response.json
             echo
           fi
+
+      - name: Debug - dump index.json structure
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          response=$(curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/index.json")
+          echo "$response" | python3 -c "import sys, json; data = json.loads(json.load(sys.stdin)['asset']['value']); [print(key, '->', data['sections'].get(key, {}).get('type')) for key in data.get('order', [])]"
