@@ -31,17 +31,40 @@
   --cdm-radius: 0px;
 
   /* ---- Dawn theme variable overrides (RGB triples, no rgb()/#) ---- */
-  --color-base-text: 66, 39, 15;
-  --color-base-background-1: 250, 247, 242;
-  --color-base-background-2: 242, 237, 230;
-  --color-base-accent-1: 66, 39, 15;
-  --color-base-accent-2: 176, 194, 225;
-  --color-base-solid-button-labels: 242, 237, 230;
-  --color-base-outline-button-labels: 66, 39, 15;
-  --color-base-border: 192, 173, 153;
+  --color-base-text: 66, 39, 15 !important;
+  --color-base-background-1: 250, 247, 242 !important;
+  --color-base-background-2: 242, 237, 230 !important;
+  --color-base-accent-1: 66, 39, 15 !important;
+  --color-base-accent-2: 176, 194, 225 !important;
+  --color-base-solid-button-labels: 242, 237, 230 !important;
+  --color-base-outline-button-labels: 66, 39, 15 !important;
+  --color-base-border: 192, 173, 153 !important;
+
+  /* ---- Dawn font variable overrides ---- */
+  --font-heading-family: 'Libre Baskerville', Georgia, serif !important;
+  --font-heading-style: normal !important;
+  --font-heading-weight: 400 !important;
+  --font-body-family: 'Jost', Helvetica, Arial, sans-serif !important;
+  --font-body-style: normal !important;
+  --font-body-weight: 300 !important;
+}
+
+/* ---- Re-apply brand colors inside Dawn's per-section color schemes ---- */
+:root,
+[class^="color-"],
+[class*=" color-"] {
+  --color-base-text: 66, 39, 15 !important;
+  --color-base-background-1: 250, 247, 242 !important;
+  --color-base-background-2: 242, 237, 230 !important;
+  --color-base-accent-1: 66, 39, 15 !important;
+  --color-base-accent-2: 176, 194, 225 !important;
+  --color-base-solid-button-labels: 242, 237, 230 !important;
+  --color-base-outline-button-labels: 66, 39, 15 !important;
+  --color-base-border: 192, 173, 153 !important;
 }
 
 /* ---- Base typography ---- */
+html,
 body,
 .body-typography,
 .shopify-section,
@@ -50,7 +73,7 @@ input,
 textarea,
 select,
 button {
-  font-family: var(--cdm-font-sans);
+  font-family: var(--cdm-font-sans) !important;
   font-weight: 300;
   letter-spacing: .01em;
 }
@@ -62,7 +85,7 @@ h1, h2, h3, h4, h5, h6,
 .product__title,
 .collection__title,
 .card__heading {
-  font-family: var(--cdm-font-serif);
+  font-family: var(--cdm-font-serif) !important;
   font-weight: 400;
   letter-spacing: 0;
   color: var(--cdm-espresso-900);
