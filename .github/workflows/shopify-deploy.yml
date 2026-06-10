@@ -20,18 +20,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Find live (main) theme
+      - name: Find target (Atelier) theme
         id: theme
         run: |
           response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes.json")
-          theme_id=$(echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); ids = [t['id'] for t in data.get('themes', []) if t.get('role') == 'main']; print(ids[0] if ids else '')")
+          theme_id=$(echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); ids = [t['id'] for t in data.get('themes', []) if 'atelier' in t.get('name', '').lower()]; print(ids[0] if ids else '')")
           if [ -z "$theme_id" ]; then
-            echo "Could not find live theme. Response was:"
+            echo "Could not find Atelier theme. Response was:"
             echo "$response"
             exit 1
           fi
           echo "theme_id=$theme_id" >> "$GITHUB_OUTPUT"
-          echo "Live theme ID: $theme_id"
+          echo "Target theme ID: $theme_id"
 
       - name: Upload brand CSS asset
         run: |
