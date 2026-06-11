@@ -1,0 +1,179 @@
+{{ 'casa-di-mor-ds.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  1:1 port of src/pages/HomePage.jsx using the components and
+  tokens from src/styles + src/components/commerce + src/components/core.
+  Structure, classes and copy mirror the design system exactly.
+{%- endcomment -%}
+
+<div>
+
+  {%- comment -%} <div className="bq-hero"> EditorialFigure(hero) {%- endcomment -%}
+  <div class="bq-hero">
+    <div class="cdm-figure cdm-figure--hero cdm-figure--bottom cdm-figure--zoom">
+      <img class="cdm-figure__img" src="{{ 'cdm-editorial-sea-gown.jpg' | asset_url }}" alt="Verano eterno">
+      <div class="cdm-figure__scrim" style="background: linear-gradient(to top, rgba(34,28,23,.62), rgba(34,28,23,.12) 48%, transparent 72%);"></div>
+      <div class="cdm-figure__content">
+        <span class="cdm-figure__eyebrow">Colección 2026</span>
+        <div class="cdm-figure__title">Verano eterno</div>
+        <p class="cdm-figure__sub">Lo suave, lo esencial y lo eterno en lo cotidiano.</p>
+        <div style="margin-top: 10px;">
+          <a href="{{ section.settings.collection_url | default: '#' }}" class="cdm-btn cdm-btn--accent cdm-btn--md">Descubrir la colección</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} <section className="bq-section bq-wrap"> Statement {%- endcomment -%}
+  <section class="bq-section bq-wrap">
+    <div class="bq-statement">
+      <img class="bq-seal" src="{{ 'cdm-key-espresso.png' | asset_url }}" alt="Casa Di Mor">
+      <span class="cdm-eyebrow">{{ 'Propósito' | upcase | split: '' | join: ' ' }}</span>
+      <p class="q">Que cada prenda sea una inversión, y no un gasto — liberando la frescura y el estilo atemporal de quien la porta.</p>
+    </div>
+  </section>
+
+  {%- comment -%} <section className="bq-section bq-wrap" style={{paddingTop:0}}> Capsule grid {%- endcomment -%}
+  <section class="bq-section bq-wrap" style="padding-top: 0;">
+    <div class="bq-sec-head">
+      <div>
+        <div class="bq-script-accent">la cápsula</div>
+        <h2>Verano Eterno</h2>
+      </div>
+      <a class="bq-link" href="{{ section.settings.collection_url | default: '#' }}">Ver todo</a>
+    </div>
+    <div class="bq-grid">
+
+      {%- comment -%} ProductCard: Vestido Luz {%- endcomment -%}
+      <div class="cdm-pcard" style="cursor: pointer;">
+        <div class="cdm-pcard__media">
+          <img class="cdm-pcard__img" src="{{ 'cdm-look-white-dress.jpg' | asset_url }}" alt="Vestido Luz">
+          <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+              <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="cdm-pcard__body">
+          <div class="cdm-pcard__name">Vestido Luz</div>
+          <div class="cdm-pcard__row">
+            <span class="cdm-pcard__price">€ 280</span>
+            <span class="cdm-pcard__swatches">
+              <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
+              <span class="cdm-pcard__dot" style="background: #b0c2e1;"></span>
+              <span class="cdm-pcard__dot" style="background: #42270f;"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} ProductCard: Maxi Mare (with "Nuevo" tag) {%- endcomment -%}
+      <div class="cdm-pcard" style="cursor: pointer;">
+        <div class="cdm-pcard__media">
+          <img class="cdm-pcard__img" src="{{ 'cdm-look-02.jpg' | asset_url }}" alt="Maxi Mare">
+          <span class="cdm-pcard__tag"><span class="cdm-tag cdm-tag--soft">Nuevo</span></span>
+          <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+              <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="cdm-pcard__body">
+          <div class="cdm-pcard__name">Maxi Mare</div>
+          <div class="cdm-pcard__row">
+            <span class="cdm-pcard__price">€ 340</span>
+            <span class="cdm-pcard__swatches">
+              <span class="cdm-pcard__dot" style="background: #b0c2e1;"></span>
+              <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} ProductCard: Piping Atena {%- endcomment -%}
+      <div class="cdm-pcard" style="cursor: pointer;">
+        <div class="cdm-pcard__media">
+          <img class="cdm-pcard__img" src="{{ 'cdm-look-03.jpg' | asset_url }}" alt="Piping Atena">
+          <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+              <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="cdm-pcard__body">
+          <div class="cdm-pcard__name">Piping Atena</div>
+          <div class="cdm-pcard__row">
+            <span class="cdm-pcard__price">€ 310</span>
+            <span class="cdm-pcard__swatches">
+              <span class="cdm-pcard__dot" style="background: #efe8df;"></span>
+              <span class="cdm-pcard__dot" style="background: #42270f;"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} ProductCard: Top Ola {%- endcomment -%}
+      <div class="cdm-pcard" style="cursor: pointer;">
+        <div class="cdm-pcard__media">
+          <img class="cdm-pcard__img" src="{{ 'cdm-look-04.jpg' | asset_url }}" alt="Top Ola">
+          <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+              <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="cdm-pcard__body">
+          <div class="cdm-pcard__name">Top Ola</div>
+          <div class="cdm-pcard__row">
+            <span class="cdm-pcard__price">€ 160</span>
+            <span class="cdm-pcard__swatches">
+              <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {%- comment -%} <section className="bq-wrap" style={{paddingBottom: var(--space-9)}}> Editorial split {%- endcomment -%}
+  <section class="bq-wrap" style="padding-bottom: var(--space-9);">
+    <div class="bq-split">
+      <div class="cdm-figure cdm-figure--portrait cdm-figure--bottom cdm-figure--zoom">
+        <img class="cdm-figure__img" src="{{ 'cdm-editorial-beach-group.jpg' | asset_url }}" alt="La luz que ya existe en ti">
+        <div class="cdm-figure__scrim" style="background: linear-gradient(to top, rgba(34,28,23,.55), rgba(34,28,23,.2));"></div>
+        <div class="cdm-figure__content">
+          <span class="cdm-figure__eyebrow">Editorial</span>
+          <div class="cdm-figure__title">La luz que ya existe en ti</div>
+        </div>
+      </div>
+      <div class="cdm-figure cdm-figure--portrait cdm-figure--bottom cdm-figure--zoom">
+        <img class="cdm-figure__img" src="{{ 'cdm-lifestyle-garden.jpg' | asset_url }}" alt="Maestría del detalle">
+        <div class="cdm-figure__scrim" style="background: linear-gradient(to top, rgba(34,28,23,.55), rgba(34,28,23,.2));"></div>
+        <div class="cdm-figure__content">
+          <span class="cdm-figure__eyebrow">Atelier</span>
+          <div class="cdm-figure__title">Maestría del detalle</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "CDM Design System",
+  "settings": [
+    {
+      "type": "url",
+      "id": "collection_url",
+      "label": "Enlace de colección"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CDM Design System"
+    }
+  ]
+}
+{% endschema %}

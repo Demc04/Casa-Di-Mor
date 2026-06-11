@@ -38,7 +38,7 @@ jobs:
           theme_id="${{ steps.theme.outputs.theme_id }}"
           declare -A files=(
             ["shopify-theme/assets/casa-di-mor-brand.css"]="assets/casa-di-mor-brand.css"
-            ["shopify-theme/assets/casa-di-mor-home.css"]="assets/casa-di-mor-home.css"
+            ["shopify-theme/assets/casa-di-mor-ds.css"]="assets/casa-di-mor-ds.css"
             ["shopify-theme/assets/cdm-editorial-sea-gown.jpg"]="assets/cdm-editorial-sea-gown.jpg"
             ["shopify-theme/assets/cdm-editorial-beach-group.jpg"]="assets/cdm-editorial-beach-group.jpg"
             ["shopify-theme/assets/cdm-lifestyle-garden.jpg"]="assets/cdm-lifestyle-garden.jpg"
@@ -48,7 +48,7 @@ jobs:
             ["shopify-theme/assets/cdm-look-03.jpg"]="assets/cdm-look-03.jpg"
             ["shopify-theme/assets/cdm-look-04.jpg"]="assets/cdm-look-04.jpg"
             ["shopify-theme/snippets/casa-di-mor-fonts.liquid"]="snippets/casa-di-mor-fonts.liquid"
-            ["shopify-theme/sections/casa-di-mor-home.liquid"]="sections/casa-di-mor-home.liquid"
+            ["shopify-theme/sections/casa-di-mor-ds.liquid"]="sections/casa-di-mor-ds.liquid"
           )
           for src in "${!files[@]}"; do
             key="${files[$src]}"
@@ -101,8 +101,8 @@ jobs:
           cat > /tmp/merge_index.py << 'EOF'
           import json, sys
           data = json.loads(sys.stdin.read())
-          key = 'casa_di_mor_home'
-          section = {'type': 'casa-di-mor-home', 'settings': {}}
+          key = 'casa_di_mor_ds'
+          section = {'type': 'casa-di-mor-ds', 'settings': {}}
           data['sections'] = {key: section}
           data['order'] = [key]
           print(json.dumps(data))
