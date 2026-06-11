@@ -24,6 +24,15 @@
     </div>
   </div>
 
+  {%- comment -%} Walking jaguar isotype marquee {%- endcomment -%}
+  <div class="bq-jaguar-walk" aria-hidden="true">
+    <div class="bq-jaguar-walk__track">
+      {%- for i in (1..16) -%}
+        <img class="bq-jaguar-walk__img" src="{{ 'cdm-isotype-jaguar-espresso.png' | asset_url }}" alt="">
+      {%- endfor -%}
+    </div>
+  </div>
+
   {%- comment -%} <section className="bq-section bq-wrap"> Statement {%- endcomment -%}
   <section class="bq-section bq-wrap">
     <div class="bq-statement">
