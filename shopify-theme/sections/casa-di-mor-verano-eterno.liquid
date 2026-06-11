@@ -39,7 +39,7 @@
         <img class="cdm-ve-seal" src="{{ 'cdm-key-espresso.png' | asset_url }}" alt="Casa Di Mor">
       {%- endif -%}
       {%- if section.settings.statement_eyebrow != blank -%}
-        <span class="cdm-ve-eyebrow">{{ section.settings.statement_eyebrow }}</span>
+        <span class="cdm-ve-eyebrow">{{ section.settings.statement_eyebrow | upcase | split: '' | join: ' ' }}</span>
       {%- endif -%}
       {%- if section.settings.statement_text != blank -%}
         <p class="cdm-ve-quote">{{ section.settings.statement_text }}</p>
@@ -76,7 +76,19 @@
             </div>
             <div class="cdm-ve-card__body">
               <div class="cdm-ve-card__name">{{ product.title }}</div>
-              <div class="cdm-ve-card__price">{{ product.price | money }}</div>
+              <div class="cdm-ve-card__row">
+                <span class="cdm-ve-card__price">{{ product.price | money }}</span>
+                {%- assign cdm_color_option = product.options_with_values | where: "name", "Color" | first -%}
+                {%- if cdm_color_option -%}
+                  <span class="cdm-ve-card__swatches">
+                    {%- for value in cdm_color_option.values -%}
+                      {%- if value.swatch.color -%}
+                        <span class="cdm-ve-card__dot" style="background: {{ value.swatch.color }};"></span>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </span>
+                {%- endif -%}
+              </div>
             </div>
           </a>
         {%- else -%}

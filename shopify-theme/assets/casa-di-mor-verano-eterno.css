@@ -7,7 +7,7 @@
 .cdm-ve { background: var(--cdm-paper); }
 
 .cdm-ve-wrap {
-  max-width: 1400px;
+  max-width: 90rem;
   margin: 0 auto;
   padding: 0 40px;
 }
@@ -48,7 +48,7 @@
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
 }
 
@@ -64,7 +64,7 @@
 .cdm-ve-figure__title {
   font-family: var(--cdm-font-serif);
   color: var(--cdm-ivory);
-  font-size: clamp(1.8rem, 5vw, 3.4rem);
+  font-size: clamp(1.6rem, 4vw, 3rem);
   line-height: 1.05;
   margin: 0;
   font-weight: 400;
@@ -82,7 +82,7 @@
 .cdm-ve-hero { padding: 18px 18px 0; }
 
 /* ---- Statement / purpose ---- */
-.cdm-ve-section { padding: 64px 0; }
+.cdm-ve-section { padding: 96px 0; }
 
 .cdm-ve-statement {
   text-align: center;
@@ -104,7 +104,7 @@
   font-family: var(--cdm-font-sans);
   font-weight: 500;
   text-transform: uppercase;
-  font-size: .72rem;
+  font-size: .75rem;
   letter-spacing: .28em;
   color: var(--cdm-espresso-500);
 }
@@ -185,7 +185,7 @@
 .cdm-ve-card__img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   transition: transform var(--cdm-dur-slow) var(--cdm-ease-out);
 }
@@ -221,10 +221,30 @@
   line-height: 1.2;
 }
 
+.cdm-ve-card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .cdm-ve-card__price {
   font-size: .82rem;
   letter-spacing: .06em;
   color: var(--cdm-espresso);
+  white-space: nowrap;
+}
+
+.cdm-ve-card__swatches {
+  display: flex;
+  gap: 6px;
+}
+
+.cdm-ve-card__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--cdm-hairline);
 }
 
 /* ---- Editorial split ---- */
@@ -232,7 +252,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  padding-bottom: 88px;
+  padding-bottom: 96px;
 }
 
 @media (max-width: 989px) {
