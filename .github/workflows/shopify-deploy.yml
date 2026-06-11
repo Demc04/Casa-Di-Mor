@@ -20,6 +20,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Debug list collections and products
+        run: |
+          echo "Custom collections:"
+          curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/custom_collections.json" | python3 -c "import sys, json; data = json.load(sys.stdin); [print(f\"  id={c['id']} title={c['title']!r} handle={c['handle']!r}\") for c in data.get('custom_collections', [])]"
+          echo "Smart collections:"
+          curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/smart_collections.json" | python3 -c "import sys, json; data = json.load(sys.stdin); [print(f\"  id={c['id']} title={c['title']!r} handle={c['handle']!r}\") for c in data.get('smart_collections', [])]"
+          echo "Products:"
+          curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/products.json?limit=50" | python3 -c "import sys, json; data = json.load(sys.stdin); [print(f\"  id={p['id']} title={p['title']!r} handle={p['handle']!r}\") for p in data.get('products', [])]"
+
       - name: Find target (Atelier) theme
         id: theme
         run: |
