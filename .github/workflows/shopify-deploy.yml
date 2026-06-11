@@ -101,11 +101,6 @@ jobs:
           section = {'type': 'casa-di-mor-verano-eterno', 'settings': {}}
           section['settings'].update({
               'collection': 'all',
-              'hero_image': 'shopify://shop_images/Tezza-7633.jpg',
-              'split_image_1': 'shopify://shop_images/Tezza-1677.jpg',
-              'split_eyebrow_1': 'Atelier',
-              'split_title_1': 'Premium materials and hand-selected finishing touches',
-              'split_image_2': 'shopify://shop_images/Vestido_blanco.jpg',
           })
           data['sections'] = {key: section}
           data['order'] = [key]
