@@ -24,6 +24,8 @@ jobs:
         id: theme
         run: |
           response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes.json")
+          echo "All themes:"
+          echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); [print(f\"  id={t['id']} name={t['name']!r} role={t['role']}\") for t in data.get('themes', [])]"
           theme_id=$(echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); ids = [t['id'] for t in data.get('themes', []) if 'atelier' in t.get('name', '').lower()]; print(ids[0] if ids else '')")
           if [ -z "$theme_id" ]; then
             echo "Could not find Atelier theme. Response was:"
@@ -101,6 +103,9 @@ jobs:
 
           current=$(echo "$response" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])")
 
+          echo "Current templates/index.json:"
+          echo "$current"
+
           cat > /tmp/merge_index.py << 'EOF'
           import json, sys
           data = json.loads(sys.stdin.read())
@@ -135,15 +140,21 @@ jobs:
 
           current=$(echo "$response" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])")
 
+          echo "Current footer-group.json:"
+          echo "$current"
+
           cat > /tmp/merge_footer.py << 'EOF'
           import json, sys
           data = json.loads(sys.stdin.read())
+          changed = []
           for key, section in data.get('sections', {}).items():
             if section.get('type') == 'footer':
               section['type'] = 'casa-di-mor-footer'
               section['settings'] = {}
               section.pop('blocks', None)
               section.pop('block_order', None)
+              changed.append(key)
+          print(f"Changed sections: {changed}", file=sys.stderr)
           print(json.dumps(data))
           EOF
 
