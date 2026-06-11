@@ -18,7 +18,7 @@
         <div class="cdm-figure__title">Verano eterno</div>
         <p class="cdm-figure__sub">Lo suave, lo esencial y lo eterno en lo cotidiano.</p>
         <div style="margin-top: 10px;">
-          <a href="{{ section.settings.collection_url | default: '#' }}" class="cdm-btn cdm-btn--accent cdm-btn--md">Descubrir la colección</a>
+          <a href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}" class="cdm-btn cdm-btn--accent cdm-btn--md">Descubrir la colección</a>
         </div>
       </div>
     </div>
@@ -39,98 +39,142 @@
       <div>
         <h2>Verano Eterno</h2>
       </div>
-      <a class="bq-link" href="{{ section.settings.collection_url | default: '#' }}">Ver todo</a>
+      <a class="bq-link" href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}">Ver todo</a>
     </div>
     <div class="bq-grid">
 
-      {%- comment -%} ProductCard: Vestido Luz {%- endcomment -%}
-      <div class="cdm-pcard" style="cursor: pointer;">
-        <div class="cdm-pcard__media">
-          <img class="cdm-pcard__img" src="{{ 'cdm-look-white-dress.jpg' | asset_url }}" alt="Vestido Luz">
-          <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-              <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="cdm-pcard__body">
-          <div class="cdm-pcard__name">Vestido Luz</div>
-          <div class="cdm-pcard__row">
-            <span class="cdm-pcard__price">€ 280</span>
-            <span class="cdm-pcard__swatches">
-              <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
-              <span class="cdm-pcard__dot" style="background: #b0c2e1;"></span>
-              <span class="cdm-pcard__dot" style="background: #42270f;"></span>
-            </span>
-          </div>
-        </div>
-      </div>
+      {%- if section.settings.collection != blank and section.settings.collection.products.size > 0 -%}
 
-      {%- comment -%} ProductCard: Maxi Mare (with "Nuevo" tag) {%- endcomment -%}
-      <div class="cdm-pcard" style="cursor: pointer;">
-        <div class="cdm-pcard__media">
-          <img class="cdm-pcard__img" src="{{ 'cdm-look-02.jpg' | asset_url }}" alt="Maxi Mare">
-          <span class="cdm-pcard__tag"><span class="cdm-tag cdm-tag--soft">Nuevo</span></span>
-          <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-              <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="cdm-pcard__body">
-          <div class="cdm-pcard__name">Maxi Mare</div>
-          <div class="cdm-pcard__row">
-            <span class="cdm-pcard__price">€ 340</span>
-            <span class="cdm-pcard__swatches">
-              <span class="cdm-pcard__dot" style="background: #b0c2e1;"></span>
-              <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
-            </span>
-          </div>
-        </div>
-      </div>
+        {%- for product in section.settings.collection.products limit: 4 -%}
+          {%- comment -%} ProductCard: {{ product.title }} {%- endcomment -%}
+          <a href="{{ product.url }}" class="cdm-pcard">
+            <div class="cdm-pcard__media">
+              <img class="cdm-pcard__img" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.featured_image.alt | default: product.title }}">
+              {%- if product.tags contains 'Nuevo' -%}
+                <span class="cdm-pcard__tag"><span class="cdm-tag cdm-tag--soft">Nuevo</span></span>
+              {%- endif -%}
+              <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                  <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="cdm-pcard__body">
+              <div class="cdm-pcard__name">{{ product.title }}</div>
+              <div class="cdm-pcard__row">
+                <span class="cdm-pcard__price">{{ product.price | money }}</span>
+                {%- assign color_option = null -%}
+                {%- for option in product.options_with_values -%}
+                  {%- if option.name == 'Color' or option.name == 'Colour' or option.name == 'Color/Colour' -%}
+                    {%- assign color_option = option -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- if color_option -%}
+                  <span class="cdm-pcard__swatches">
+                    {%- for value in color_option.values -%}
+                      {%- if value.swatch.color -%}
+                        <span class="cdm-pcard__dot" style="background: {{ value.swatch.color }};"></span>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </span>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+        {%- endfor -%}
 
-      {%- comment -%} ProductCard: Piping Atena {%- endcomment -%}
-      <div class="cdm-pcard" style="cursor: pointer;">
-        <div class="cdm-pcard__media">
-          <img class="cdm-pcard__img" src="{{ 'cdm-look-03.jpg' | asset_url }}" alt="Piping Atena">
-          <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-              <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="cdm-pcard__body">
-          <div class="cdm-pcard__name">Piping Atena</div>
-          <div class="cdm-pcard__row">
-            <span class="cdm-pcard__price">€ 310</span>
-            <span class="cdm-pcard__swatches">
-              <span class="cdm-pcard__dot" style="background: #efe8df;"></span>
-              <span class="cdm-pcard__dot" style="background: #42270f;"></span>
-            </span>
-          </div>
-        </div>
-      </div>
+      {%- else -%}
 
-      {%- comment -%} ProductCard: Top Ola {%- endcomment -%}
-      <div class="cdm-pcard" style="cursor: pointer;">
-        <div class="cdm-pcard__media">
-          <img class="cdm-pcard__img" src="{{ 'cdm-look-04.jpg' | asset_url }}" alt="Top Ola">
-          <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-              <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="cdm-pcard__body">
-          <div class="cdm-pcard__name">Top Ola</div>
-          <div class="cdm-pcard__row">
-            <span class="cdm-pcard__price">€ 160</span>
-            <span class="cdm-pcard__swatches">
-              <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
-            </span>
+        {%- comment -%} ProductCard: Vestido Luz {%- endcomment -%}
+        <div class="cdm-pcard" style="cursor: pointer;">
+          <div class="cdm-pcard__media">
+            <img class="cdm-pcard__img" src="{{ 'cdm-look-white-dress.jpg' | asset_url }}" alt="Vestido Luz">
+            <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="cdm-pcard__body">
+            <div class="cdm-pcard__name">Vestido Luz</div>
+            <div class="cdm-pcard__row">
+              <span class="cdm-pcard__price">€ 280</span>
+              <span class="cdm-pcard__swatches">
+                <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
+                <span class="cdm-pcard__dot" style="background: #b0c2e1;"></span>
+                <span class="cdm-pcard__dot" style="background: #42270f;"></span>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+
+        {%- comment -%} ProductCard: Maxi Mare (with "Nuevo" tag) {%- endcomment -%}
+        <div class="cdm-pcard" style="cursor: pointer;">
+          <div class="cdm-pcard__media">
+            <img class="cdm-pcard__img" src="{{ 'cdm-look-02.jpg' | asset_url }}" alt="Maxi Mare">
+            <span class="cdm-pcard__tag"><span class="cdm-tag cdm-tag--soft">Nuevo</span></span>
+            <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="cdm-pcard__body">
+            <div class="cdm-pcard__name">Maxi Mare</div>
+            <div class="cdm-pcard__row">
+              <span class="cdm-pcard__price">€ 340</span>
+              <span class="cdm-pcard__swatches">
+                <span class="cdm-pcard__dot" style="background: #b0c2e1;"></span>
+                <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} ProductCard: Piping Atena {%- endcomment -%}
+        <div class="cdm-pcard" style="cursor: pointer;">
+          <div class="cdm-pcard__media">
+            <img class="cdm-pcard__img" src="{{ 'cdm-look-03.jpg' | asset_url }}" alt="Piping Atena">
+            <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="cdm-pcard__body">
+            <div class="cdm-pcard__name">Piping Atena</div>
+            <div class="cdm-pcard__row">
+              <span class="cdm-pcard__price">€ 310</span>
+              <span class="cdm-pcard__swatches">
+                <span class="cdm-pcard__dot" style="background: #efe8df;"></span>
+                <span class="cdm-pcard__dot" style="background: #42270f;"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} ProductCard: Top Ola {%- endcomment -%}
+        <div class="cdm-pcard" style="cursor: pointer;">
+          <div class="cdm-pcard__media">
+            <img class="cdm-pcard__img" src="{{ 'cdm-look-04.jpg' | asset_url }}" alt="Top Ola">
+            <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="cdm-pcard__body">
+            <div class="cdm-pcard__name">Top Ola</div>
+            <div class="cdm-pcard__row">
+              <span class="cdm-pcard__price">€ 160</span>
+              <span class="cdm-pcard__swatches">
+                <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      {%- endif -%}
 
     </div>
   </section>
@@ -164,9 +208,14 @@
   "name": "CDM Design System",
   "settings": [
     {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección Verano Eterno"
+    },
+    {
       "type": "url",
       "id": "collection_url",
-      "label": "Enlace de colección"
+      "label": "Enlace de colección (alternativo)"
     }
   ],
   "presets": [
