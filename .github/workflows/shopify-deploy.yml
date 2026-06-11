@@ -148,7 +148,7 @@ jobs:
           data = json.loads(sys.stdin.read())
           changed = []
           for key, section in data.get('sections', {}).items():
-            if section.get('type') == 'footer':
+            if key == 'footer':
               section['type'] = 'casa-di-mor-footer'
               section['settings'] = {}
               section.pop('blocks', None)
