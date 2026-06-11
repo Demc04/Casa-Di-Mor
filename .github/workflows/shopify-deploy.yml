@@ -38,13 +38,17 @@ jobs:
           theme_id="${{ steps.theme.outputs.theme_id }}"
           declare -A files=(
             ["shopify-theme/assets/casa-di-mor-brand.css"]="assets/casa-di-mor-brand.css"
-            ["shopify-theme/assets/casa-di-mor-verano-eterno.css"]="assets/casa-di-mor-verano-eterno.css"
+            ["shopify-theme/assets/casa-di-mor-home.css"]="assets/casa-di-mor-home.css"
             ["shopify-theme/assets/cdm-editorial-sea-gown.jpg"]="assets/cdm-editorial-sea-gown.jpg"
             ["shopify-theme/assets/cdm-editorial-beach-group.jpg"]="assets/cdm-editorial-beach-group.jpg"
             ["shopify-theme/assets/cdm-lifestyle-garden.jpg"]="assets/cdm-lifestyle-garden.jpg"
             ["shopify-theme/assets/cdm-key-espresso.png"]="assets/cdm-key-espresso.png"
+            ["shopify-theme/assets/cdm-look-white-dress.jpg"]="assets/cdm-look-white-dress.jpg"
+            ["shopify-theme/assets/cdm-look-02.jpg"]="assets/cdm-look-02.jpg"
+            ["shopify-theme/assets/cdm-look-03.jpg"]="assets/cdm-look-03.jpg"
+            ["shopify-theme/assets/cdm-look-04.jpg"]="assets/cdm-look-04.jpg"
             ["shopify-theme/snippets/casa-di-mor-fonts.liquid"]="snippets/casa-di-mor-fonts.liquid"
-            ["shopify-theme/sections/casa-di-mor-verano-eterno.liquid"]="sections/casa-di-mor-verano-eterno.liquid"
+            ["shopify-theme/sections/casa-di-mor-home.liquid"]="sections/casa-di-mor-home.liquid"
           )
           for src in "${!files[@]}"; do
             key="${files[$src]}"
@@ -97,11 +101,8 @@ jobs:
           cat > /tmp/merge_index.py << 'EOF'
           import json, sys
           data = json.loads(sys.stdin.read())
-          key = 'casa_di_mor_verano_eterno'
-          section = {'type': 'casa-di-mor-verano-eterno', 'settings': {}}
-          section['settings'].update({
-              'collection': 'all',
-          })
+          key = 'casa_di_mor_home'
+          section = {'type': 'casa-di-mor-home', 'settings': {}}
           data['sections'] = {key: section}
           data['order'] = [key]
           print(json.dumps(data))

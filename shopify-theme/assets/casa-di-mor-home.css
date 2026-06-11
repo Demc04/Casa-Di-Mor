@@ -1,0 +1,333 @@
+/* ============================================================
+   Casa Di Mor — Home section
+   1:1 port of the boutique React HomePage (src/pages/HomePage.jsx
+   + HomePage.css), self-contained so it renders correctly even
+   if the global brand stylesheet hasn't loaded yet.
+   ============================================================ */
+
+.cdm-home {
+  --ch-espresso-900: #28160a;
+  --ch-espresso-700: #42270f;
+  --ch-espresso-600: #5a3a1d;
+  --ch-espresso-500: #74502e;
+  --ch-sand-200: #e4d9cb;
+  --ch-sand-300: #d4c4b2;
+  --ch-sand-400: #c0ad99;
+  --ch-powder-300: #b0c2e1;
+  --ch-powder-500: #748ebc;
+  --ch-ivory: #f2ede6;
+  --ch-paper: #faf7f2;
+  --ch-shell: #ebe3d8;
+  --ch-porcelain: #ffffff;
+  --ch-hairline: rgba(66, 39, 15, .14);
+
+  --ch-font-serif: 'Libre Baskerville', Georgia, serif;
+  --ch-font-sans: 'Jost', Helvetica, Arial, sans-serif;
+  --ch-font-script: 'Pinyon Script', 'Cormorant Garamond', cursive;
+
+  --ch-ease-out: cubic-bezier(.16,1,.3,1);
+  --ch-dur: 200ms;
+  --ch-dur-slow: 420ms;
+
+  background: var(--ch-paper);
+}
+
+.cdm-home-wrap {
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.cdm-home-section { padding: 96px 0; }
+
+/* ---- Editorial figure (hero + split images) ---- */
+.cdm-home-figure {
+  position: relative;
+  overflow: hidden;
+  background: var(--ch-shell);
+  display: flex;
+  font-family: var(--ch-font-sans);
+}
+
+.cdm-home-figure--hero { aspect-ratio: 21 / 9; }
+.cdm-home-figure--portrait { aspect-ratio: 3 / 4; }
+
+.cdm-home-figure__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--ch-dur-slow) var(--ch-ease-out);
+}
+
+.cdm-home-figure:hover .cdm-home-figure__img { transform: scale(1.03); }
+
+.cdm-home-figure__scrim {
+  position: absolute;
+  inset: 0;
+}
+
+.cdm-home-figure__content {
+  position: relative;
+  z-index: 1;
+  padding: 32px;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.cdm-home-figure__eyebrow {
+  font-family: var(--ch-font-sans);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: .7rem;
+  letter-spacing: .28em;
+  color: var(--ch-sand-300);
+}
+
+.cdm-home-figure__title {
+  font-family: var(--ch-font-serif);
+  color: var(--ch-ivory);
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+  font-weight: 400;
+}
+
+.cdm-home-figure__sub {
+  color: var(--ch-sand-300);
+  font-weight: 300;
+  max-width: 42ch;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---- Hero ---- */
+.cdm-home-hero { padding: 18px 18px 0; }
+
+/* ---- Statement / purpose ---- */
+.cdm-home-statement {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.cdm-home-seal {
+  width: 132px;
+  height: 132px;
+  max-width: 60%;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 26px;
+  opacity: .9;
+}
+
+.cdm-home-eyebrow {
+  font-family: var(--ch-font-sans);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: .75rem;
+  letter-spacing: .28em;
+  color: var(--ch-espresso-500);
+  line-height: 1;
+}
+
+.cdm-home-quote {
+  font-family: var(--ch-font-serif);
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+  line-height: 1.32;
+  color: var(--ch-espresso-900);
+  margin: 22px 0 0;
+  text-wrap: balance;
+}
+
+/* ---- Capsule / product grid ---- */
+.cdm-home-sec-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.cdm-home-script {
+  font-family: var(--ch-font-script);
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--ch-powder-500);
+}
+
+.cdm-home-sec-head h2 {
+  font-family: var(--ch-font-serif);
+  font-weight: 400;
+  font-size: 2.2rem;
+  color: var(--ch-espresso-900);
+  margin: 8px 0 0;
+}
+
+.cdm-home-link {
+  font-family: var(--ch-font-sans);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-size: .66rem;
+  font-weight: 500;
+  color: var(--ch-espresso-900);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--ch-espresso-700);
+  padding-bottom: 4px;
+  transition: letter-spacing var(--ch-dur) var(--ch-ease-out);
+}
+
+.cdm-home-link:hover { letter-spacing: .26em; }
+
+.cdm-home-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+/* ---- Product card ---- */
+.cdm-home-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  font-family: var(--ch-font-sans);
+}
+
+.cdm-home-card__media {
+  position: relative;
+  overflow: hidden;
+  background: var(--ch-porcelain);
+  border: 1px solid var(--ch-hairline);
+  aspect-ratio: 3 / 4;
+}
+
+.cdm-home-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform var(--ch-dur-slow) var(--ch-ease-out);
+}
+
+.cdm-home-card:hover .cdm-home-card__img { transform: scale(1.04); }
+
+.cdm-home-card__tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--ch-font-sans);
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-size: .62rem;
+  font-weight: 400;
+  background: var(--ch-paper);
+  color: var(--ch-espresso-700);
+  padding: 5px 10px;
+  border: 1px solid var(--ch-sand-400);
+}
+
+.cdm-home-card__body {
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cdm-home-card__name {
+  font-family: var(--ch-font-serif);
+  font-size: 1.15rem;
+  color: var(--ch-espresso-900);
+  line-height: 1.2;
+}
+
+.cdm-home-card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cdm-home-card__price {
+  font-size: .82rem;
+  letter-spacing: .06em;
+  color: var(--ch-espresso-700);
+  white-space: nowrap;
+}
+
+.cdm-home-card__swatches {
+  display: flex;
+  gap: 6px;
+}
+
+.cdm-home-card__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--ch-hairline);
+}
+
+/* ---- Editorial split ---- */
+.cdm-home-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 989px) {
+  .cdm-home-grid { grid-template-columns: repeat(2, 1fr); }
+  .cdm-home-split { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .cdm-home-wrap { padding: 0 18px; }
+  .cdm-home-figure--hero { aspect-ratio: 4 / 5; }
+}
+
+/* ---- Buttons / tags ---- */
+.cdm-home-btn {
+  font-family: var(--ch-font-sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-weight: 500;
+  border-radius: 0;
+  font-size: .74rem;
+  padding: .85em 1.7em;
+  white-space: nowrap;
+  background: var(--ch-powder-300);
+  color: var(--ch-espresso-900);
+  transition: background var(--ch-dur) var(--ch-ease-out), letter-spacing var(--ch-dur) var(--ch-ease-out);
+}
+
+.cdm-home-btn:hover { background: #93a9d3; letter-spacing: .22em; }
+
+.cdm-home-tag {
+  font-family: var(--ch-font-sans);
+  display: inline-flex;
+  align-items: center;
+  gap: .5em;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-weight: 500;
+  font-size: .62rem;
+  padding: .5em .85em;
+  border-radius: 0;
+  line-height: 1;
+  white-space: nowrap;
+  background: #e7edf6;
+  color: var(--ch-powder-500);
+}
