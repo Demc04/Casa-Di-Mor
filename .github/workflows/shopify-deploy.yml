@@ -154,6 +154,10 @@ jobs:
               section.pop('blocks', None)
               section.pop('block_order', None)
               changed.append(key)
+          if 'logo_RVGHD7' in data.get('sections', {}):
+            del data['sections']['logo_RVGHD7']
+            changed.append('removed logo_RVGHD7')
+          data['order'] = [k for k in data.get('order', []) if k != 'logo_RVGHD7']
           print(f"Changed sections: {changed}", file=sys.stderr)
           print(json.dumps(data))
           EOF
