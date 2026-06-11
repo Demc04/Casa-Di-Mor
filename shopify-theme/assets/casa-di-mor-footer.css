@@ -1,0 +1,71 @@
+/* ============================================================
+   Casa Di Mor — Footer (1:1 port)
+   Source: src/components/layout/Footer.jsx + Footer.css,
+   src/components/forms/Newsletter.jsx + Newsletter.css,
+   src/components/core/Divider.jsx + Divider.css,
+   plus the relevant tokens from src/styles/colors.css,
+   spacing.css and typography.css.
+   ============================================================ */
+
+:root {
+  --espresso-700: #42270f;
+  --ivory: #f2ede6;
+  --sand-300: #d4c4b2;
+  --powder-500: #748ebc;
+
+  --text-strong: #28160a;
+  --text-faint: #8c7765;
+  --text-on-dark: var(--ivory);
+  --text-on-dark-muted: var(--sand-300);
+  --accent-strong: var(--powder-500);
+
+  --border: var(--sand-300);
+  --hairline-on-dark: color-mix(in oklab, var(--ivory) 22%, transparent);
+
+  --font-serif: 'Libre Baskerville', 'Baskerville Old Face', 'Baskerville', Georgia, serif;
+  --font-sans: 'Jost', 'Futura', 'Century Gothic', system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 240ms;
+
+  --container-xl: 90rem;
+}
+
+/* ---- src/components/layout/Footer.css ---- */
+.bq-footer{ background: var(--espresso-700); color: var(--text-on-dark); padding: 80px 40px 40px; }
+.bq-footer__inner{ max-width: var(--container-xl); margin:0 auto; }
+.bq-footer__top{ display:grid; grid-template-columns: 1.2fr 1fr 1fr 1.4fr; gap: 40px; }
+.bq-footer__brand .bq-footer__tag{ font-family: var(--font-sans); color: var(--text-on-dark-muted);
+  font-weight:300; line-height:1.7; margin-top:18px; max-width: 26ch; }
+.bq-footer__logo{ width: 220px; max-width: 100%; height: auto; display:block; }
+.bq-col h4{ font-family: var(--font-sans); text-transform:uppercase; letter-spacing:.22em; font-size:.62rem;
+  font-weight:500; color: var(--text-on-dark-muted); margin:0 0 18px; }
+.bq-col a{ display:block; font-family: var(--font-sans); color: var(--text-on-dark); text-decoration:none;
+  font-size:.9rem; padding:6px 0; opacity:.85; transition: opacity var(--dur) var(--ease-out); cursor:pointer; }
+.bq-col a:hover{ opacity:1; }
+.bq-news-head{ font-family: var(--font-serif); font-size:1.4rem; margin:0 0 16px; }
+.bq-footer__bottom{ display:flex; justify-content:space-between; align-items:center; margin-top: 30px;
+  font-family: var(--font-sans); font-size:.72rem; color: var(--text-on-dark-muted); letter-spacing:.04em; }
+@media (max-width: 860px){ .bq-footer__top{ grid-template-columns:1fr 1fr; gap:32px; } }
+
+/* ---- src/components/forms/Newsletter.css (light tone only) ---- */
+.cdm-news{ font-family: var(--font-sans); width:100%; max-width: 460px; }
+.cdm-news__row{ display:flex; align-items:flex-end; gap:14px; border-bottom:1px solid var(--border);
+  transition: border-color var(--dur) var(--ease-out); }
+.cdm-news__row:focus-within{ border-bottom-color: var(--espresso-700); }
+.cdm-news__input{ flex:1; background:transparent; border:0; font-family: var(--font-sans); font-size:1rem;
+  color: var(--text-strong); padding:.55em 0; }
+.cdm-news__input:focus{ outline:none; }
+.cdm-news__input::placeholder{ color: var(--text-faint); }
+.cdm-news__btn{ background:transparent; border:0; cursor:pointer; font-family: var(--font-sans);
+  text-transform:uppercase; letter-spacing:.2em; font-size:.66rem; font-weight:500; color: var(--text-strong);
+  padding:.55em 0; white-space:nowrap; transition: letter-spacing var(--dur) var(--ease-out), color var(--dur) var(--ease-out); }
+.cdm-news__btn:hover{ letter-spacing:.26em; color: var(--accent-strong); }
+.cdm-news__note{ font-size:.72rem; color: var(--text-faint); margin-top:10px; }
+.cdm-news--light .cdm-news__row{ border-bottom-color: var(--hairline-on-dark); }
+.cdm-news--light .cdm-news__input{ color: var(--text-on-dark); }
+.cdm-news--light .cdm-news__btn{ color: var(--text-on-dark); }
+.cdm-news--light .cdm-news__note{ color: var(--text-on-dark-muted); }
+
+/* ---- src/components/core/Divider.css (light tone only) ---- */
+.cdm-divider{ border:0; height:1px; background: var(--hairline-on-dark); width:100%; }

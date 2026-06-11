@@ -47,8 +47,11 @@ jobs:
             ["shopify-theme/assets/cdm-look-02.jpg"]="assets/cdm-look-02.jpg"
             ["shopify-theme/assets/cdm-look-03.jpg"]="assets/cdm-look-03.jpg"
             ["shopify-theme/assets/cdm-look-04.jpg"]="assets/cdm-look-04.jpg"
+            ["shopify-theme/assets/casa-di-mor-footer.css"]="assets/casa-di-mor-footer.css"
+            ["shopify-theme/assets/cdm-logo-full-ivory.png"]="assets/cdm-logo-full-ivory.png"
             ["shopify-theme/snippets/casa-di-mor-fonts.liquid"]="snippets/casa-di-mor-fonts.liquid"
             ["shopify-theme/sections/casa-di-mor-ds.liquid"]="sections/casa-di-mor-ds.liquid"
+            ["shopify-theme/sections/casa-di-mor-footer.liquid"]="sections/casa-di-mor-footer.liquid"
           )
           for src in "${!files[@]}"; do
             key="${files[$src]}"
@@ -111,6 +114,42 @@ jobs:
           updated=$(python3 /tmp/merge_index.py <<< "$current")
 
           payload=$(python3 -c "import sys, json; content = sys.stdin.read(); print(json.dumps({'asset': {'key': 'templates/index.json', 'value': content}}))" <<< "$updated")
+
+          http_code=$(curl -s -X PUT \
+            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /tmp/response.json -w "%{http_code}")
+          echo "  -> $http_code"
+          if [ "$http_code" != "200" ]; then
+            echo "  Error response:"
+            cat /tmp/response.json
+            echo
+          fi
+
+      - name: Replace site footer with Casa Di Mor footer section
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          response=$(curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=sections/footer-group.json")
+
+          current=$(echo "$response" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])")
+
+          cat > /tmp/merge_footer.py << 'EOF'
+          import json, sys
+          data = json.loads(sys.stdin.read())
+          for key, section in data.get('sections', {}).items():
+            if section.get('type') == 'footer':
+              section['type'] = 'casa-di-mor-footer'
+              section['settings'] = {}
+              section.pop('blocks', None)
+              section.pop('block_order', None)
+          print(json.dumps(data))
+          EOF
+
+          updated=$(python3 /tmp/merge_footer.py <<< "$current")
+
+          payload=$(python3 -c "import sys, json; content = sys.stdin.read(); print(json.dumps({'asset': {'key': 'sections/footer-group.json', 'value': content}}))" <<< "$updated")
 
           http_code=$(curl -s -X PUT \
             -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \

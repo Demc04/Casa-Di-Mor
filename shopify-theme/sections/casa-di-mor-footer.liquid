@@ -1,0 +1,62 @@
+{{ 'casa-di-mor-footer.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  1:1 port of src/components/layout/Footer.jsx (+ Newsletter, Divider).
+  Structure, classes and copy mirror the design system exactly.
+{%- endcomment -%}
+
+<footer class="bq-footer">
+  <div class="bq-footer__inner">
+    <div class="bq-footer__top">
+      <div class="bq-footer__brand">
+        <img class="bq-footer__logo" src="{{ 'cdm-logo-full-ivory.png' | asset_url }}" alt="Casa Di Mor — Maison Privée">
+        <p class="bq-footer__tag">Una casa luminosa y sofisticada donde las sensaciones se quedan.</p>
+      </div>
+      <div class="bq-col">
+        <h4>Tienda</h4>
+        <a href="{{ section.settings.shop_link | default: '#' }}">Verano Eterno</a>
+        <a href="{{ section.settings.shop_link | default: '#' }}">Vestidos</a>
+        <a href="{{ section.settings.shop_link | default: '#' }}">Tops</a>
+        <a href="{{ section.settings.shop_link | default: '#' }}">Novedades</a>
+      </div>
+      <div class="bq-col">
+        <h4>Casa</h4>
+        <a>Historia</a>
+        <a>Atelier</a>
+        <a>Sostenibilidad</a>
+        <a>Contacto</a>
+      </div>
+      <div class="bq-col">
+        <div class="bq-news-head">Únete a la casa</div>
+        <form class="cdm-news cdm-news--light" action="{{ routes.root_url }}contact#ContactFooter" method="post">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="cdm-news__row">
+            <input class="cdm-news__input" type="email" name="contact[email]" placeholder="Tu email" required>
+            <button class="cdm-news__btn" type="submit">Suscribirse</button>
+          </div>
+          <p class="cdm-news__note">Acceso anticipado a cada colección.</p>
+        </form>
+      </div>
+    </div>
+    <div style="margin: 48px 0 0;"><hr class="cdm-divider"></div>
+    <div class="bq-footer__bottom">
+      <span>© {{ 'now' | date: '%Y' }} Casa Di Mor</span>
+      <span>Hecho con luz · Verano eterno</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "CDM Footer",
+  "settings": [
+    {
+      "type": "url",
+      "id": "shop_link",
+      "label": "Enlace de tienda"
+    }
+  ]
+}
+{% endschema %}
