@@ -1,0 +1,60 @@
+{%- comment -%}
+  Minimalist single-color walking jaguar, animated as a seamless
+  4-6s loop (natural quadruped walk cycle: diagonal leg pairs,
+  subtle body bob, gentle tail sway, stable head). Inspired by the
+  isotype-jaguar mark in src/assets/brand, redrawn as a lean
+  vector silhouette suitable for animation.
+{%- endcomment -%}
+<div class="cdm-jaguar-walk" aria-hidden="true">
+  <svg class="cdm-jaguar-walk__svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" focusable="false">
+    <style>
+      .cdm-jw-body{ animation: cdm-jw-bob 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+      .cdm-jw-tail{ animation: cdm-jw-tail 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 0% 75%; }
+      .cdm-jw-leg-a{ animation: cdm-jw-swing-a 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0%; }
+      .cdm-jw-leg-b{ animation: cdm-jw-swing-b 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0%; }
+      @keyframes cdm-jw-bob{
+        0%, 50%, 100% { transform: translateY(0); }
+        25%, 75% { transform: translateY(-4px); }
+      }
+      @keyframes cdm-jw-tail{
+        0%, 100% { transform: rotate(-4deg); }
+        50% { transform: rotate(5deg); }
+      }
+      @keyframes cdm-jw-swing-a{
+        0%, 100% { transform: rotate(-14deg); }
+        50% { transform: rotate(14deg); }
+      }
+      @keyframes cdm-jw-swing-b{
+        0%, 100% { transform: rotate(14deg); }
+        50% { transform: rotate(-14deg); }
+      }
+    </style>
+    <g fill="var(--espresso-700)">
+      {%- comment -%} far legs (behind body) {%- endcomment -%}
+      <path class="cdm-jw-leg-b" d="M 174.0,176 C 172.0,217.3 176.5,258.6 177.5,286.5 A 7.5 7.5 0 0 0 192.5,286.5 C 193.5,258.6 198.0,217.3 196.0,176 Z"/>
+      <path class="cdm-jw-leg-a" d="M 474.0,176 C 472.0,217.3 476.5,258.6 477.5,286.5 A 7.5 7.5 0 0 0 492.5,286.5 C 493.5,258.6 498.0,217.3 496.0,176 Z"/>
+
+      {%- comment -%} body, head, ears and tail (move together) {%- endcomment -%}
+      <g class="cdm-jw-body">
+        <path class="cdm-jw-tail" d="M 540,148 C 590,150 628,120 642,72 C 646,54 662,53 658,72 C 650,124 608,170 546,172 Z"/>
+        <path d="M 92,90 L 100,50 L 117,87 Z"/>
+        <path d="M 117,87 L 132,48 L 149,85 Z"/>
+        <path d="M 35,148
+                 C 25,134 30,116 50,106
+                 C 66,97 86,92 106,93
+                 C 124,94 140,104 152,118
+                 C 167,100 202,85 262,80
+                 C 382,72 482,75 527,95
+                 C 552,107 557,128 545,148
+                 C 535,164 510,174 480,177
+                 L 197,177
+                 C 160,177 130,170 114,158
+                 C 96,153 70,151 35,148 Z"/>
+      </g>
+
+      {%- comment -%} near legs (in front) {%- endcomment -%}
+      <path class="cdm-jw-leg-a" d="M 154.0,176 C 152.0,217.3 156.5,258.6 157.5,286.5 A 7.5 7.5 0 0 0 172.5,286.5 C 173.5,258.6 178.0,217.3 176.0,176 Z"/>
+      <path class="cdm-jw-leg-b" d="M 454.0,176 C 452.0,217.3 456.5,258.6 457.5,286.5 A 7.5 7.5 0 0 0 472.5,286.5 C 473.5,258.6 478.0,217.3 476.0,176 Z"/>
+    </g>
+  </svg>
+</div>

@@ -245,9 +245,6 @@
 .bq-link:hover{ letter-spacing:.26em; }
 @media (max-width: 860px){ .bq-grid{ grid-template-columns:1fr 1fr; } .bq-split{ grid-template-columns:1fr; } }
 
-/* ---- Walking jaguar isotype marquee (src/assets/brand/isotype-jaguar-espresso.png) ---- */
-.bq-jaguar-walk{ overflow:hidden; padding: var(--space-5) 0; background: var(--bg); }
-.bq-jaguar-walk__track{ display:flex; align-items:center; width:max-content;
-  animation: cdm-jaguar-walk 40s linear infinite; }
-.bq-jaguar-walk__img{ height:56px; width:auto; margin-right: 64px; flex-shrink:0; opacity:.85; }
-@keyframes cdm-jaguar-walk{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+/* ---- Animated walking jaguar mark (see snippets/cdm-jaguar-walk.liquid) ---- */
+.cdm-jaguar-walk{ display:flex; justify-content:center; padding: var(--space-5) 0; background: var(--bg); }
+.cdm-jaguar-walk__svg{ width: 240px; height:auto; }
