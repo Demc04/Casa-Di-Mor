@@ -247,14 +247,5 @@
 
 /* ---- Animated walking jaguar mark (see snippets/cdm-jaguar-walk.liquid) ---- */
 .cdm-jaguar-walk{ display:flex; justify-content:center; padding: var(--space-5) 0; background: var(--bg); }
-.cdm-jaguar-walk__stage{ width: 280px; overflow:hidden; }
-.cdm-jaguar-walk__img{
-  display:block; width:100%; height:auto;
-  transform-origin: 50% 100%;
-  animation: cdm-jaguar-walk-gait 1.6s ease-in-out infinite;
-}
-@keyframes cdm-jaguar-walk-gait{
-  0%, 50%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-4px) rotate(0.6deg); }
-  75% { transform: translateY(-4px) rotate(-0.6deg); }
-}
+.cdm-jaguar-walk__stage{ width: 280px; }
+.cdm-jaguar-walk__img{ display:block; width:100%; height:auto; }
