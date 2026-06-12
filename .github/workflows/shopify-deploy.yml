@@ -74,6 +74,26 @@ jobs:
             fi
           done
 
+      - name: Remove obsolete theme assets
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          obsolete=(
+            "assets/cdm-isotype-jaguar-espresso.png"
+          )
+          for key in "${obsolete[@]}"; do
+            echo "Deleting $key"
+            http_code=$(curl -s --globoff -X DELETE \
+              -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+              -H "X-Shopify-Shop: $SHOPIFY_STORE" \
+              "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=$key" -o /tmp/response.json -w "%{http_code}")
+            echo "  -> $http_code"
+            if [ "$http_code" != "200" ]; then
+              echo "  Response:"
+              cat /tmp/response.json
+              echo
+            fi
+          done
+
       - name: Inject fonts snippet into theme.liquid
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
