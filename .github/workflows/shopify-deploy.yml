@@ -53,6 +53,7 @@ jobs:
             ["shopify-theme/assets/cdm-logo-full-ivory.png"]="assets/cdm-logo-full-ivory.png"
             ["shopify-theme/snippets/casa-di-mor-fonts.liquid"]="snippets/casa-di-mor-fonts.liquid"
             ["shopify-theme/snippets/cdm-jaguar-walk.liquid"]="snippets/cdm-jaguar-walk.liquid"
+            ["shopify-theme/assets/cdm-jaguar-walk.png"]="assets/cdm-jaguar-walk.png"
             ["shopify-theme/sections/casa-di-mor-ds.liquid"]="sections/casa-di-mor-ds.liquid"
             ["shopify-theme/sections/casa-di-mor-footer.liquid"]="sections/casa-di-mor-footer.liquid"
           )
