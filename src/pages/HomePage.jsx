@@ -5,7 +5,7 @@ import { Tag } from '../components/core/Tag';
 import { Button } from '../components/core/Button';
 import { Eyebrow } from '../components/core/Eyebrow';
 import { products } from '../data/products';
-import editorialSeaGown from '../assets/images/editorial-sea-gown.jpg';
+import editorialSeaGown from '../assets/images/picnic-reading.jpg';
 import editorialBeachGroup from '../assets/images/editorial-beach-group.jpg';
 import lifestyleGarden from '../assets/images/lifestyle-garden.jpg';
 import keyEspresso from '../assets/brand/key-espresso.png';
