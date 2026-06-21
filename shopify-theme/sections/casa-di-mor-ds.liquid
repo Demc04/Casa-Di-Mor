@@ -41,7 +41,9 @@
       </div>
       <a class="bq-link" href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}">Ver todo</a>
     </div>
-    <div class="bq-grid">
+    <div class="bq-grid bq-grid--marquee">
+     <div class="bq-grid__track">
+     {%- for i in (1..2) -%}
 
       {%- if section.settings.collection != blank and section.settings.collection.products.size > 0 -%}
 
@@ -176,6 +178,8 @@
 
       {%- endif -%}
 
+     {%- endfor -%}
+     </div>
     </div>
   </section>
 

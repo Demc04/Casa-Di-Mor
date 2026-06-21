@@ -255,6 +255,11 @@ header-component#header-component[data-sticky-state="inactive"] .header__row{
 .bq-sec-head h2{ font-family: var(--font-serif); font-weight:400; font-size: 2.2rem; color: var(--text-strong); margin:8px 0 0; }
 .bq-script-accent{ font-family: var(--font-script); font-weight:400; font-size: 2rem; line-height:1; color: var(--accent-strong); }
 .bq-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.bq-grid--marquee{ display:block; overflow:hidden; }
+.bq-grid__track{ display:flex; gap:22px; width:max-content; animation: bq-marquee 28s linear infinite; }
+.bq-grid--marquee:hover .bq-grid__track{ animation-play-state: paused; }
+.bq-grid__track .cdm-pcard{ width: 280px; flex: 0 0 auto; }
+@keyframes bq-marquee{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
 .bq-split{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .bq-link{ font-family: var(--font-sans); text-transform:uppercase; letter-spacing:.2em; font-size:.66rem;
   font-weight:500; color: var(--text-strong); text-decoration:none; cursor:pointer; white-space:nowrap;
