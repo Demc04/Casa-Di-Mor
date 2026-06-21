@@ -34,33 +34,32 @@
   </section>
 
   {%- comment -%} <section className="bq-section bq-wrap" style={{paddingTop:0}}> Capsule grid {%- endcomment -%}
-  <section class="bq-section bq-wrap" style="padding-top: 0;">
-    <div class="bq-sec-head">
-      <div>
-        <h2>Verano Eterno</h2>
+  <section class="bq-section" style="padding-top: 0;">
+    <div class="bq-wrap">
+      <div class="bq-sec-head">
+        <div>
+          <h2>Verano Eterno</h2>
+        </div>
+        <a class="bq-link" href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}">Ver todo</a>
       </div>
-      <a class="bq-link" href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}">Ver todo</a>
     </div>
-    <div class="bq-grid bq-grid--categories">
 
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'category_card' -%}
-          {%- assign cat_url = section.settings.collection.url | default: section.settings.collection_url -%}
-          {%- if block.settings.tag != blank and section.settings.collection != blank -%}
-            {%- assign cat_url = cat_url | append: '/' | append: block.settings.tag | handle -%}
-          {%- endif -%}
-          {%- comment -%} CategoryCard: {{ block.settings.title }} {%- endcomment -%}
-          <a href="{{ cat_url | default: '#' }}" class="cdm-pcard" {{ block.shopify_attributes }}>
-            <div class="cdm-pcard__media">
-              {%- if block.settings.image != blank -%}
-                <img class="cdm-pcard__img" src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.image.alt | default: block.settings.title }}">
-              {%- endif -%}
-            </div>
-            <div class="cdm-pcard__body">
-              <div class="cdm-pcard__name">{{ block.settings.title }}</div>
-            </div>
-          </a>
+    {%- assign cat_blocks = section.blocks | where: 'type', 'category_card' -%}
+    <div class="bq-cats" style="grid-template-columns: repeat({{ cat_blocks.size }}, 1fr);">
+
+      {%- for block in cat_blocks -%}
+        {%- assign cat_url = section.settings.collection.url | default: section.settings.collection_url -%}
+        {%- if block.settings.tag != blank and section.settings.collection != blank -%}
+          {%- assign cat_url = cat_url | append: '/' | append: block.settings.tag | handle -%}
         {%- endif -%}
+        {%- comment -%} CategoryCard: {{ block.settings.title }} {%- endcomment -%}
+        <a href="{{ cat_url | default: '#' }}" class="bq-cat" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img class="bq-cat__img" src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.image.alt | default: block.settings.title }}">
+          {%- endif -%}
+          <div class="bq-cat__scrim"></div>
+          <div class="bq-cat__title">{{ block.settings.title }}</div>
+        </a>
       {%- endfor -%}
 
     </div>
