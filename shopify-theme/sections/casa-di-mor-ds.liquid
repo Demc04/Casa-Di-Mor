@@ -68,7 +68,7 @@
   {%- comment -%} Marquee de fotos elegidas manualmente {%- endcomment -%}
   {%- assign marquee_blocks = section.blocks | where: 'type', 'marquee_image' -%}
   {%- if marquee_blocks.size > 0 -%}
-    <section class="bq-section bq-wrap" style="padding-top: 0;">
+    <section class="bq-section" style="padding-top: 0;">
       <div class="bq-grid bq-grid--marquee">
         <div class="bq-grid__track">
           {%- for n in (1..2) -%}
