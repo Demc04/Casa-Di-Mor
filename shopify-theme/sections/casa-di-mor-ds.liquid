@@ -41,9 +41,7 @@
       </div>
       <a class="bq-link" href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}">Ver todo</a>
     </div>
-    <div class="bq-grid bq-grid--marquee">
-     <div class="bq-grid__track">
-     {%- for i in (1..2) -%}
+    <div class="bq-grid">
 
       {%- if section.settings.collection != blank and section.settings.collection.products.size > 0 -%}
 
@@ -178,10 +176,29 @@
 
       {%- endif -%}
 
-     {%- endfor -%}
-     </div>
     </div>
   </section>
+
+  {%- comment -%} Marquee de fotos elegidas manualmente {%- endcomment -%}
+  {%- if section.blocks.size > 0 -%}
+    <section class="bq-section bq-wrap" style="padding-top: 0;">
+      <div class="bq-grid bq-grid--marquee">
+        <div class="bq-grid__track">
+          {%- for n in (1..2) -%}
+            {%- for block in section.blocks -%}
+              {%- if block.settings.image != blank -%}
+                <div class="cdm-pcard" style="cursor: default;">
+                  <div class="cdm-pcard__media">
+                    <img class="cdm-pcard__img" src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.image.alt | default: '' }}">
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
 
   {%- comment -%} <section className="bq-wrap" style={{paddingBottom: var(--space-9)}}> Editorial split {%- endcomment -%}
   <section class="bq-wrap" style="padding-bottom: var(--space-9);">
@@ -220,6 +237,19 @@
       "type": "url",
       "id": "collection_url",
       "label": "Enlace de colección (alternativo)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "marquee_image",
+      "name": "Foto del carrusel",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        }
+      ]
     }
   ],
   "presets": [
