@@ -259,6 +259,7 @@ header-component#header-component[data-sticky-state="inactive"] .header__row{
 .bq-grid__track{ display:flex; gap:22px; width:max-content; animation: bq-marquee 28s linear infinite; }
 .bq-grid--marquee:hover .bq-grid__track{ animation-play-state: paused; }
 .bq-grid__track .cdm-pcard{ width: 280px; flex: 0 0 auto; }
+.bq-grid__track .cdm-pcard__media{ border: 0; }
 @keyframes bq-marquee{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
 .bq-cats{ display:grid; gap:0; }
 .bq-cat{ position:relative; display:block; aspect-ratio: 3/4; overflow:hidden; text-decoration:none; background: var(--shell); }
