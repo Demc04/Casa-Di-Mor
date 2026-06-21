@@ -41,153 +41,41 @@
       </div>
       <a class="bq-link" href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}">Ver todo</a>
     </div>
-    <div class="bq-grid">
+    <div class="bq-grid bq-grid--categories">
 
-      {%- if section.settings.collection != blank and section.settings.collection.products.size > 0 -%}
-
-        {%- for product in section.settings.collection.products limit: 4 -%}
-          {%- comment -%} ProductCard: {{ product.title }} {%- endcomment -%}
-          <a href="{{ product.url }}" class="cdm-pcard">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'category_card' -%}
+          {%- assign cat_url = section.settings.collection.url | default: section.settings.collection_url -%}
+          {%- if block.settings.tag != blank and section.settings.collection != blank -%}
+            {%- assign cat_url = cat_url | append: '/' | append: block.settings.tag | handle -%}
+          {%- endif -%}
+          {%- comment -%} CategoryCard: {{ block.settings.title }} {%- endcomment -%}
+          <a href="{{ cat_url | default: '#' }}" class="cdm-pcard" {{ block.shopify_attributes }}>
             <div class="cdm-pcard__media">
-              <img class="cdm-pcard__img" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.featured_image.alt | default: product.title }}">
-              {%- if product.tags contains 'Nuevo' -%}
-                <span class="cdm-pcard__tag"><span class="cdm-tag cdm-tag--soft">Nuevo</span></span>
+              {%- if block.settings.image != blank -%}
+                <img class="cdm-pcard__img" src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.image.alt | default: block.settings.title }}">
               {%- endif -%}
-              <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-                  <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
-                </svg>
-              </button>
             </div>
             <div class="cdm-pcard__body">
-              <div class="cdm-pcard__name">{{ product.title }}</div>
-              <div class="cdm-pcard__row">
-                <span class="cdm-pcard__price">{{ product.price | money }}</span>
-                {%- assign color_option = null -%}
-                {%- for option in product.options_with_values -%}
-                  {%- if option.name == 'Color' or option.name == 'Colour' or option.name == 'Color/Colour' -%}
-                    {%- assign color_option = option -%}
-                  {%- endif -%}
-                {%- endfor -%}
-                {%- if color_option -%}
-                  <span class="cdm-pcard__swatches">
-                    {%- for value in color_option.values -%}
-                      {%- if value.swatch.color -%}
-                        <span class="cdm-pcard__dot" style="background: {{ value.swatch.color }};"></span>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </span>
-                {%- endif -%}
-              </div>
+              <div class="cdm-pcard__name">{{ block.settings.title }}</div>
             </div>
           </a>
-        {%- endfor -%}
-
-      {%- else -%}
-
-        {%- comment -%} ProductCard: Vestido Luz {%- endcomment -%}
-        <div class="cdm-pcard" style="cursor: pointer;">
-          <div class="cdm-pcard__media">
-            <img class="cdm-pcard__img" src="{{ 'cdm-look-white-dress.jpg' | asset_url }}" alt="Vestido Luz">
-            <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
-              </svg>
-            </button>
-          </div>
-          <div class="cdm-pcard__body">
-            <div class="cdm-pcard__name">Vestido Luz</div>
-            <div class="cdm-pcard__row">
-              <span class="cdm-pcard__price">€ 280</span>
-              <span class="cdm-pcard__swatches">
-                <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
-                <span class="cdm-pcard__dot" style="background: #b0c2e1;"></span>
-                <span class="cdm-pcard__dot" style="background: #42270f;"></span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {%- comment -%} ProductCard: Maxi Mare (with "Nuevo" tag) {%- endcomment -%}
-        <div class="cdm-pcard" style="cursor: pointer;">
-          <div class="cdm-pcard__media">
-            <img class="cdm-pcard__img" src="{{ 'cdm-look-02.jpg' | asset_url }}" alt="Maxi Mare">
-            <span class="cdm-pcard__tag"><span class="cdm-tag cdm-tag--soft">Nuevo</span></span>
-            <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
-              </svg>
-            </button>
-          </div>
-          <div class="cdm-pcard__body">
-            <div class="cdm-pcard__name">Maxi Mare</div>
-            <div class="cdm-pcard__row">
-              <span class="cdm-pcard__price">€ 340</span>
-              <span class="cdm-pcard__swatches">
-                <span class="cdm-pcard__dot" style="background: #b0c2e1;"></span>
-                <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {%- comment -%} ProductCard: Piping Atena {%- endcomment -%}
-        <div class="cdm-pcard" style="cursor: pointer;">
-          <div class="cdm-pcard__media">
-            <img class="cdm-pcard__img" src="{{ 'cdm-look-03.jpg' | asset_url }}" alt="Piping Atena">
-            <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
-              </svg>
-            </button>
-          </div>
-          <div class="cdm-pcard__body">
-            <div class="cdm-pcard__name">Piping Atena</div>
-            <div class="cdm-pcard__row">
-              <span class="cdm-pcard__price">€ 310</span>
-              <span class="cdm-pcard__swatches">
-                <span class="cdm-pcard__dot" style="background: #efe8df;"></span>
-                <span class="cdm-pcard__dot" style="background: #42270f;"></span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {%- comment -%} ProductCard: Top Ola {%- endcomment -%}
-        <div class="cdm-pcard" style="cursor: pointer;">
-          <div class="cdm-pcard__media">
-            <img class="cdm-pcard__img" src="{{ 'cdm-look-04.jpg' | asset_url }}" alt="Top Ola">
-            <button type="button" class="cdm-pcard__fav" aria-label="Guardar">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>
-              </svg>
-            </button>
-          </div>
-          <div class="cdm-pcard__body">
-            <div class="cdm-pcard__name">Top Ola</div>
-            <div class="cdm-pcard__row">
-              <span class="cdm-pcard__price">€ 160</span>
-              <span class="cdm-pcard__swatches">
-                <span class="cdm-pcard__dot" style="background: #f2ede6;"></span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-      {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
 
     </div>
   </section>
 
   {%- comment -%} Marquee de fotos elegidas manualmente {%- endcomment -%}
-  {%- if section.blocks.size > 0 -%}
+  {%- assign marquee_blocks = section.blocks | where: 'type', 'marquee_image' -%}
+  {%- if marquee_blocks.size > 0 -%}
     <section class="bq-section bq-wrap" style="padding-top: 0;">
       <div class="bq-grid bq-grid--marquee">
         <div class="bq-grid__track">
           {%- for n in (1..2) -%}
-            {%- for block in section.blocks -%}
+            {%- for block in marquee_blocks -%}
               {%- if block.settings.image != blank -%}
-                <div class="cdm-pcard" style="cursor: default;">
+                <div class="cdm-pcard" style="cursor: default;" {{ block.shopify_attributes }}>
                   <div class="cdm-pcard__media">
                     <img class="cdm-pcard__img" src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.image.alt | default: '' }}">
                   </div>
@@ -241,6 +129,29 @@
   ],
   "blocks": [
     {
+      "type": "category_card",
+      "name": "Categoría",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Nombre",
+          "default": "Categoría"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag de filtro",
+          "info": "Debe coincidir exactamente con el tag/etiqueta que tienen los productos de esta categoría en Shopify (ej: Bottoms, Tops, Dresses)."
+        }
+      ]
+    },
+    {
       "type": "marquee_image",
       "name": "Foto del carrusel",
       "settings": [
@@ -254,7 +165,12 @@
   ],
   "presets": [
     {
-      "name": "CDM Design System"
+      "name": "CDM Design System",
+      "blocks": [
+        { "type": "category_card", "settings": { "title": "Tops", "tag": "Tops" } },
+        { "type": "category_card", "settings": { "title": "Bottoms", "tag": "Bottoms" } },
+        { "type": "category_card", "settings": { "title": "Dresses", "tag": "Dresses" } }
+      ]
     }
   ]
 }
