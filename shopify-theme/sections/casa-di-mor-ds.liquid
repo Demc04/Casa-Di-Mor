@@ -45,7 +45,7 @@
     </div>
 
     {%- assign cat_blocks = section.blocks | where: 'type', 'category_card' -%}
-    <div class="bq-cats" style="grid-template-columns: repeat({{ cat_blocks.size }}, 1fr);">
+    <div class="bq-cats" style="grid-template-columns: repeat(2, 1fr);">
 
       {%- for block in cat_blocks -%}
         {%- assign cat_url = section.settings.collection.url | default: section.settings.collection_url -%}
