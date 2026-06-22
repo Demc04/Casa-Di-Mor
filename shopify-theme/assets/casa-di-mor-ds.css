@@ -253,7 +253,7 @@ header-component#header-component[data-sticky-state="inactive"] .header__row{
 .bq-seal{ width: 132px; height: 132px; max-width: 60%; object-fit: contain; display:block; margin: 0 auto 26px; opacity: .9; }
 .bq-statement__title{ font-family: var(--font-serif); font-weight:400; text-transform:uppercase;
   font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing:.02em; line-height:1.05;
-  color: var(--text-strong); margin: 14px 0 0; }
+  color: var(--espresso-600) !important; margin: 14px 0 0; }
 .bq-statement .q{ font-family: var(--font-serif); font-size: clamp(1.6rem, 3.4vw, 2.6rem); line-height:1.32;
   color: var(--text-strong); margin: 22px 0 0; text-wrap:balance; }
 .bq-statement__body{ font-family: var(--font-sans); font-size: 1.05rem; line-height:1.7;
