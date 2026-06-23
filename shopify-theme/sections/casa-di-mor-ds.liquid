@@ -18,7 +18,7 @@
         <div class="cdm-figure__title">Verano eterno</div>
         <p class="cdm-figure__sub">Lo suave, lo esencial y lo eterno en lo cotidiano.</p>
         <div style="margin-top: 10px;">
-          <a href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}" class="cdm-btn cdm-btn--accent cdm-btn--md">Descubrir la colección</a>
+          <a href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '/collections/all' }}" class="cdm-btn cdm-btn--accent cdm-btn--md">Descubrir la colección</a>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
       <span class="cdm-eyebrow">Introducing</span>
       <h2 class="bq-statement__title">Verano Eterno</h2>
       <p class="bq-statement__body">Inspirada en la magia de los destinos costeros y los recuerdos que perduran, Verano Eterno celebra la elegancia natural a través de siluetas ligeras, texturas delicadas y detalles pensados para acompañarte más allá de una temporada.</p>
-      <a href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}" class="cdm-btn cdm-btn--outline cdm-btn--md">Descubrir ahora</a>
+      <a href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '/collections/all' }}" class="cdm-btn cdm-btn--outline cdm-btn--md">Descubrir ahora</a>
     </div>
   </section>
 
@@ -41,7 +41,7 @@
         <div>
           <h2>Verano Eterno</h2>
         </div>
-        <a class="bq-link" href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '#' }}">Ver todo</a>
+        <a class="bq-link" href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '/collections/all' }}">Ver todo</a>
       </div>
     </div>
 
@@ -54,7 +54,7 @@
           {%- assign cat_url = cat_url | append: '/' | append: block.settings.tag | handle -%}
         {%- endif -%}
         {%- comment -%} CategoryCard: {{ block.settings.title }} {%- endcomment -%}
-        <a href="{{ cat_url | default: '#' }}" class="bq-cat" {{ block.shopify_attributes }}>
+        <a href="{{ cat_url | default: '/collections/all' }}" class="bq-cat" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
             <img class="bq-cat__img" src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.image.alt | default: block.settings.title }}">
           {%- endif -%}
