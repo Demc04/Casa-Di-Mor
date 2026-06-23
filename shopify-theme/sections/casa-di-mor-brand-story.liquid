@@ -1,0 +1,40 @@
+{{ 'casa-di-mor-ds.css' | asset_url | stylesheet_tag }}
+
+<section class="bq-section bq-wrap">
+  <div class="bq-statement">
+    <img class="bq-seal" src="{{ 'cdm-key-espresso.png' | asset_url }}" alt="Casa Di Mor">
+    <span class="cdm-eyebrow">{{ section.settings.eyebrow | default: 'Nuestra historia' }}</span>
+    <h1 class="bq-statement__title">{{ section.settings.title | default: 'La historia de Casa Di Mor' }}</h1>
+    <div class="bq-statement__body">{{ section.settings.content }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Historia de la marca",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "Nuestra historia"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "La historia de Casa Di Mor"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Texto"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Historia de la marca"
+    }
+  ]
+}
+{% endschema %}

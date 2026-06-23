@@ -56,6 +56,8 @@ jobs:
             ["shopify-theme/assets/cdm-jaguar-walk.gif"]="assets/cdm-jaguar-walk.gif"
             ["shopify-theme/sections/casa-di-mor-ds.liquid"]="sections/casa-di-mor-ds.liquid"
             ["shopify-theme/sections/casa-di-mor-footer.liquid"]="sections/casa-di-mor-footer.liquid"
+            ["shopify-theme/sections/casa-di-mor-brand-story.liquid"]="sections/casa-di-mor-brand-story.liquid"
+            ["shopify-theme/templates/page.nuestra-historia.json"]="templates/page.nuestra-historia.json"
           )
           for src in "${!files[@]}"; do
             key="${files[$src]}"
@@ -201,3 +203,24 @@ jobs:
             cat /tmp/response.json
             echo
           fi
+
+      - name: Ensure "Nuestra Historia" page exists
+        run: |
+          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/pages.json?handle=nuestra-historia")
+          page_id=$(echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); pages = data.get('pages', []); print(pages[0]['id'] if pages else '')")
+
+          if [ -n "$page_id" ]; then
+            echo "Page already exists with id=$page_id"
+            exit 0
+          fi
+
+          payload='{"page": {"title": "Nuestra Historia", "handle": "nuestra-historia", "template_suffix": "nuestra-historia", "published": true}}'
+          http_code=$(curl -s -X POST \
+            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "$SHOPIFY_API_BASE/pages.json" -o /tmp/response.json -w "%{http_code}")
+          echo "  -> $http_code"
+          cat /tmp/response.json
+          echo

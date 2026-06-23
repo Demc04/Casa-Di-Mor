@@ -90,20 +90,11 @@
 
   {%- comment -%} <section className="bq-wrap" style={{paddingBottom: var(--space-9)}}> Brand statement {%- endcomment -%}
   <section class="bq-wrap" style="padding-bottom: var(--space-9);">
-    <a href="#historia-marca" class="bq-statement bq-statement--split bq-statement--link">
+    <a href="{{ section.settings.brand_story_url | default: '/pages/nuestra-historia' }}" class="bq-statement bq-statement--split bq-statement--link">
       <img class="bq-seal" src="{{ 'cdm-key-espresso.png' | asset_url }}" alt="Casa Di Mor">
       <span class="cdm-eyebrow">Una casa hecha de historias</span>
       <p class="q">Donde la elegancia se habita, la autenticidad se celebra y cada pieza acompaña la historia de quien la lleva.</p>
     </a>
-  </section>
-
-  {%- comment -%} Brand story section {%- endcomment -%}
-  <section id="historia-marca" class="bq-section bq-wrap">
-    <div class="bq-statement">
-      <span class="cdm-eyebrow">{{ section.settings.brand_story_eyebrow | default: 'Nuestra historia' }}</span>
-      <h2 class="bq-statement__title">{{ section.settings.brand_story_title | default: 'La historia de Casa Di Mor' }}</h2>
-      <div class="bq-statement__body">{{ section.settings.brand_story_content }}</div>
-    </div>
   </section>
 
 </div>
@@ -123,21 +114,10 @@
       "label": "Enlace de colección (alternativo)"
     },
     {
-      "type": "text",
-      "id": "brand_story_eyebrow",
-      "label": "Historia de la marca: antetítulo",
-      "default": "Nuestra historia"
-    },
-    {
-      "type": "text",
-      "id": "brand_story_title",
-      "label": "Historia de la marca: título",
-      "default": "La historia de Casa Di Mor"
-    },
-    {
-      "type": "richtext",
-      "id": "brand_story_content",
-      "label": "Historia de la marca: texto"
+      "type": "url",
+      "id": "brand_story_url",
+      "label": "Enlace a la página \"Nuestra historia\"",
+      "info": "Por defecto apunta a /pages/nuestra-historia"
     }
   ],
   "blocks": [

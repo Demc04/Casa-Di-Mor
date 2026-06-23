@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "casa-di-mor-brand-story",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
