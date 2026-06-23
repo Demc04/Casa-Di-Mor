@@ -280,7 +280,7 @@ header-component#header-component[data-sticky-state="inactive"] .header__row{
 @media (max-width: 860px){ .bq-cats{ grid-template-columns:1fr !important; } }
 .bq-split{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .bq-statement--split{ aspect-ratio: auto; min-height: 420px; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  background: var(--surface-page); padding: var(--space-7); max-width:none; margin:0; width:100%; }
+  background: var(--porcelain); padding: var(--space-7); max-width:none; margin:0; width:100%; }
 .bq-statement--split .cdm-eyebrow{ color: var(--espresso-600); }
 .bq-statement--split .q{ color: var(--espresso-600); }
 .bq-statement--link{ text-decoration:none; color:inherit; cursor:pointer; transition: background var(--dur) var(--ease-out); }
