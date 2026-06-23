@@ -279,8 +279,10 @@ header-component#header-component[data-sticky-state="inactive"] .header__row{
   color: var(--text-on-dark); text-transform:uppercase; letter-spacing:.06em; font-size: clamp(1.3rem, 2.4vw, 1.9rem); }
 @media (max-width: 860px){ .bq-cats{ grid-template-columns:1fr !important; } }
 .bq-split{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.bq-statement--split{ aspect-ratio: 3/4; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  background: var(--surface-sunken); padding: var(--space-6); max-width:none; margin:0; }
+.bq-statement--split{ aspect-ratio: auto; min-height: 420px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background: var(--surface-sunken); padding: var(--space-7); max-width:none; margin:0; width:100%; }
+.bq-statement--link{ text-decoration:none; color:inherit; cursor:pointer; transition: background var(--dur) var(--ease-out); }
+.bq-statement--link:hover{ background: var(--surface-card); }
 .bq-link{ font-family: var(--font-sans); text-transform:uppercase; letter-spacing:.2em; font-size:.66rem;
   font-weight:500; color: var(--text-strong); text-decoration:none; cursor:pointer; white-space:nowrap;
   border-bottom:1px solid var(--espresso-700); padding-bottom:4px; transition: letter-spacing var(--dur) var(--ease-out); }
