@@ -203,24 +203,3 @@ jobs:
             cat /tmp/response.json
             echo
           fi
-
-      - name: Ensure "Nuestra Historia" page exists
-        run: |
-          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/pages.json?handle=nuestra-historia")
-          page_id=$(echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); pages = data.get('pages', []); print(pages[0]['id'] if pages else '')")
-
-          if [ -n "$page_id" ]; then
-            echo "Page already exists with id=$page_id"
-            exit 0
-          fi
-
-          payload='{"page": {"title": "Nuestra Historia", "handle": "nuestra-historia", "template_suffix": "nuestra-historia", "published": true}}'
-          http_code=$(curl -s -X POST \
-            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
-            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
-            -H "Content-Type: application/json" \
-            -d "$payload" \
-            "$SHOPIFY_API_BASE/pages.json" -o /tmp/response.json -w "%{http_code}")
-          echo "  -> $http_code"
-          cat /tmp/response.json
-          echo
