@@ -51,7 +51,8 @@
       {%- for block in cat_blocks -%}
         {%- assign cat_url = section.settings.collection.url | default: section.settings.collection_url | default: '/collections/all' -%}
         {%- if block.settings.tag != blank -%}
-          {%- assign cat_url = cat_url | append: '/' | append: block.settings.tag | handle -%}
+          {%- assign tag_handle = block.settings.tag | handle -%}
+          {%- assign cat_url = cat_url | append: '/' | append: tag_handle -%}
         {%- endif -%}
         {%- comment -%} CategoryCard: {{ block.settings.title }} {%- endcomment -%}
         <a href="{{ cat_url }}" class="bq-cat" {{ block.shopify_attributes }}>
