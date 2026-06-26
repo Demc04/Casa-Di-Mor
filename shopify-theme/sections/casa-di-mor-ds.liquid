@@ -74,6 +74,14 @@
       <div class="bq-grid bq-grid--marquee">
         <div class="bq-grid__track">
           {%- for n in (1..2) -%}
+            <div class="cdm-pcard bq-marquee-promo" style="cursor: default;">
+              <div class="bq-marquee-promo__inner">
+                <span class="cdm-eyebrow">Introducing</span>
+                <h3 class="bq-marquee-promo__title">Verano Eterno</h3>
+                <p class="bq-marquee-promo__body">Inspirada en la magia de los destinos costeros y los recuerdos que perduran, celebra la elegancia natural a través de siluetas ligeras y detalles que perduran.</p>
+                <a href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '/collections/all' }}" class="cdm-btn cdm-btn--outline cdm-btn--md">Descubrir ahora</a>
+              </div>
+            </div>
             {%- for block in marquee_blocks -%}
               {%- if block.settings.image != blank -%}
                 <div class="cdm-pcard" style="cursor: default;" {{ block.shopify_attributes }}>
