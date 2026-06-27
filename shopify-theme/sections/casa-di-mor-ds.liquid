@@ -66,6 +66,13 @@
     </div>
   </section>
 
+  {%- comment -%} Video full-bleed {%- endcomment -%}
+  <section class="bq-video">
+    <video class="bq-video__el" autoplay muted loop playsinline>
+      <source src="{{ 'cdm-coastal-video.mov' | asset_url }}">
+    </video>
+  </section>
+
   {%- comment -%} Marquee de fotos elegidas manualmente {%- endcomment -%}
   {%- assign marquee_blocks = section.blocks | where: 'type', 'marquee_image' -%}
   {%- if marquee_blocks.size > 0 -%}

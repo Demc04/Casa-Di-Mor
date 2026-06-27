@@ -234,6 +234,9 @@
 .bq-section{ padding: var(--space-9) 0; }
 .bq-hero{ padding: 0; }
 
+.bq-video{ padding: 0; }
+.bq-video__el{ display:block; width:100%; height:auto; max-height: 85vh; object-fit: cover; }
+
 /* The header's color-scheme vars come in fully opaque regardless of its
    "transparent" attribute. Zero them out only while the header hasn't
    become sticky (top of page) so it reads transparent over the hero,
