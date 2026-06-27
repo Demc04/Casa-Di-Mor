@@ -24,14 +24,13 @@
     </div>
   </div>
 
-  {%- comment -%} <section className="bq-section bq-wrap"> Statement {%- endcomment -%}
-  <section class="bq-section bq-wrap">
-    <div class="bq-statement">
-      <span class="cdm-eyebrow">Introducing</span>
-      <h2 class="bq-statement__title">Verano Eterno</h2>
-      <p class="bq-statement__body">Inspirada en la magia de los destinos costeros y los recuerdos que perduran, Verano Eterno celebra la elegancia natural a través de siluetas ligeras, texturas delicadas y detalles pensados para acompañarte más allá de una temporada.</p>
-      <a href="{{ section.settings.collection.url | default: section.settings.collection_url | default: '/collections/all' }}" class="cdm-btn cdm-btn--outline cdm-btn--md">Descubrir ahora</a>
-    </div>
+  {%- comment -%} <section className="bq-wrap"> Brand statement {%- endcomment -%}
+  <section class="bq-wrap" style="padding-bottom: var(--space-9);">
+    <a href="{{ section.settings.brand_story_url | default: '/pages/nuestra-historia' }}" class="bq-statement bq-statement--split bq-statement--link">
+      <img class="bq-seal" src="{{ 'cdm-key-espresso.png' | asset_url }}" alt="Casa Di Mor">
+      <span class="cdm-eyebrow">Una casa hecha de historias</span>
+      <p class="q">Donde la elegancia se habita, la autenticidad se celebra y cada pieza acompaña la historia de quien la lleva.</p>
+    </a>
   </section>
 
   {%- comment -%} <section className="bq-section bq-wrap" style={{paddingTop:0}}> Capsule grid {%- endcomment -%}
@@ -97,14 +96,6 @@
     </section>
   {%- endif -%}
 
-  {%- comment -%} <section className="bq-wrap" style={{paddingBottom: var(--space-9)}}> Brand statement {%- endcomment -%}
-  <section class="bq-wrap" style="padding-bottom: var(--space-9);">
-    <a href="{{ section.settings.brand_story_url | default: '/pages/nuestra-historia' }}" class="bq-statement bq-statement--split bq-statement--link">
-      <img class="bq-seal" src="{{ 'cdm-key-espresso.png' | asset_url }}" alt="Casa Di Mor">
-      <span class="cdm-eyebrow">Una casa hecha de historias</span>
-      <p class="q">Donde la elegancia se habita, la autenticidad se celebra y cada pieza acompaña la historia de quien la lleva.</p>
-    </a>
-  </section>
 
 </div>
 
