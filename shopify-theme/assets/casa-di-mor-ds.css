@@ -7,6 +7,8 @@
    No values modified, simplified or invented.
    ============================================================ */
 
+body{ background-color: #f2ede6 !important; }
+
 /* ---- src/styles/colors.css ---- */
 :root {
   --espresso-950: #1d1006;
