@@ -293,8 +293,9 @@ header-component#header-component[data-sticky-state="inactive"] .header__row{
 .bq-split{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .bq-statement--split{ aspect-ratio: auto; min-height: 420px; display:flex; flex-direction:column; align-items:center; justify-content:center;
   background: var(--porcelain); padding: var(--space-7); max-width:none; margin:0; width:100%; }
-.bq-statement--split .cdm-eyebrow{ color: var(--espresso-600); }
-.bq-statement--split .q{ color: var(--espresso-600); }
+.bq-statement--split .cdm-eyebrow{ color: var(--accent-strong); }
+.bq-statement--split .q{ color: var(--accent-strong); }
+.bq-statement--split .bq-seal{ filter: sepia(1) hue-rotate(170deg) saturate(2.4) brightness(.95); }
 .bq-statement--link{ text-decoration:none; color:inherit; cursor:pointer; transition: background var(--dur) var(--ease-out); }
 .bq-statement--link:hover{ background: var(--surface-card); }
 .bq-link{ font-family: var(--font-sans); text-transform:uppercase; letter-spacing:.2em; font-size:.66rem;
