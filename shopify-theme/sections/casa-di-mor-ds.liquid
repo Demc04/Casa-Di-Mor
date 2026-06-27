@@ -66,11 +66,16 @@
     </div>
   </section>
 
-  {%- comment -%} Video full-bleed {%- endcomment -%}
+  {%- comment -%} Video full-bleed con texto manifiesto {%- endcomment -%}
   <section class="bq-video">
     <video class="bq-video__el" autoplay muted loop playsinline>
       <source src="{{ 'cdm-coastal-video.mov' | asset_url }}">
     </video>
+    <div class="bq-video__scrim"></div>
+    <div class="bq-video__text">
+      <span class="bq-video__eyebrow">Casa Di Mor</span>
+      <p class="bq-video__quote">Donde habita una <span class="bq-script-accent">mujer</span>, habita una casa.</p>
+    </div>
   </section>
 
   {%- comment -%} Marquee de fotos elegidas manualmente {%- endcomment -%}
