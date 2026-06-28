@@ -284,10 +284,13 @@ button.button:hover {
   transform: scale(1.04);
 }
 
+.card__heading,
 .card__heading a,
-.card__information .card__heading {
+.card__information .card__heading,
+.card__information .card__heading a,
+.card__content .full-unstyled-link {
   font-family: var(--cdm-font-serif);
-  color: var(--cdm-espresso-900);
+  color: var(--cdm-espresso-900) !important;
 }
 
 .price,
