@@ -35,6 +35,15 @@ jobs:
           echo "theme_id=$theme_id" >> "$GITHUB_OUTPUT"
           echo "Target theme ID: $theme_id"
 
+      - name: DEBUG inspect collections and collection templates
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          echo "----- collections (handle, title, template_suffix) -----"
+          curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/custom_collections.json?fields=handle,title,template_suffix" | python3 -c "import sys, json; [print(c) for c in json.load(sys.stdin).get('custom_collections', [])]"
+          curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/smart_collections.json?fields=handle,title,template_suffix" | python3 -c "import sys, json; [print(c) for c in json.load(sys.stdin).get('smart_collections', [])]"
+          echo "----- assets list filtered to templates/collection* -----"
+          curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" | python3 -c "import sys, json; [print(a['key']) for a in json.load(sys.stdin).get('assets', []) if 'collection' in a['key']]"
+
       - name: Upload theme assets
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
