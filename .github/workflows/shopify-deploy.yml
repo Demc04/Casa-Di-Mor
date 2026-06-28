@@ -163,16 +163,7 @@ jobs:
         run: |
           curl -sL "https://${SHOPIFY_STORE}/collections/all?preview_theme_id=${{ steps.theme.outputs.theme_id }}" -o /tmp/page.html -w "HTTP %{http_code}\n"
           echo "----- text-block context around collection title -----"
-          python3 -c "
-import re
-html = open('/tmp/page.html', encoding='utf-8', errors='replace').read()
-print('LENGTH', len(html))
-for m in re.finditer(r'text-block[^\"]*', html):
-    print(m.group())
-i = html.find('Productos')
-print('----- around literal Productos -----')
-print(html[max(0,i-600):i+200] if i != -1 else 'NOT FOUND literal Productos text')
-"
+          python3 -c "import re; html = open('/tmp/page.html', encoding='utf-8', errors='replace').read(); print('LENGTH', len(html)); [print(m.group()) for m in re.finditer(r'text-block[^\"]*', html)]; i = html.find('Productos'); print('----- around literal Productos -----'); print(html[max(0,i-600):i+200] if i != -1 else 'NOT FOUND literal Productos text')"
 
       - name: Replace site footer with Casa Di Mor footer section
         run: |
