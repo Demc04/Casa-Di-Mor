@@ -35,6 +35,18 @@ jobs:
           echo "theme_id=$theme_id" >> "$GITHUB_OUTPUT"
           echo "Target theme ID: $theme_id"
 
+      - name: DEBUG dump full templates/collection.json and main-collection-banner section
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/collection.json" -o /tmp/coll.json
+          echo "=== templates/collection.json ==="
+          python3 -c "import json; print(json.load(open('/tmp/coll.json'))['asset']['value'])" || cat /tmp/coll.json
+          echo
+          echo "=== main-collection-banner section files ==="
+          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json")
+          echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); [print(a['key']) for a in data.get('assets', []) if 'banner' in a['key'].lower() or 'collection' in a['key'].lower()]"
+        continue-on-error: true
+
       - name: Upload theme assets
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
