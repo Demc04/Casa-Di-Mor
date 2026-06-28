@@ -35,14 +35,6 @@ jobs:
           echo "theme_id=$theme_id" >> "$GITHUB_OUTPUT"
           echo "Target theme ID: $theme_id"
 
-      - name: DEBUG inspect collection templates
-        run: |
-          theme_id="${{ steps.theme.outputs.theme_id }}"
-          echo "----- assets list filtered to templates/collection* -----"
-          curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /tmp/assets.json
-          python3 -c "import json; [print(a['key']) for a in json.load(open('/tmp/assets.json')).get('assets', []) if 'collection' in a['key']]" || cat /tmp/assets.json
-        continue-on-error: true
-
       - name: Upload theme assets
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
