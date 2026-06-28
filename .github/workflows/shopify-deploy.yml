@@ -38,7 +38,12 @@ jobs:
       - name: DEBUG dump current templates/collection.json
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
-          curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/collection.json" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])"
+          http_code=$(curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/collection.json" -o /tmp/coll.json -w "%{http_code}")
+          echo "HTTP $http_code"
+          cat /tmp/coll.json
+          echo
+          python3 -c "import json; print(json.load(open('/tmp/coll.json'))['asset']['value'])" || true
+        continue-on-error: true
 
       - name: Upload theme assets
         run: |
