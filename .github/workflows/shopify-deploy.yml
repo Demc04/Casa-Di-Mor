@@ -168,7 +168,7 @@ jobs:
       - name: DEBUG dump collection title + card markup
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
-          for key in "sections/main-collection.liquid" "blocks/collection-title.liquid" "blocks/_inline-collection-title.liquid" "snippets/collection-card.liquid" "snippets/editorial-collection-grid.liquid"; do
+          for key in "snippets/text.liquid" "snippets/product-card.liquid" "blocks/product-card.liquid" "blocks/_product-title.liquid" "blocks/product-title.liquid"; do
             echo "===== $key ====="
             curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=$key" \
               | python3 -c "import sys, json; d = json.load(sys.stdin); print(d.get('asset', {}).get('value', d))"
