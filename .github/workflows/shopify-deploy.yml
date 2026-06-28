@@ -35,18 +35,25 @@ jobs:
           echo "theme_id=$theme_id" >> "$GITHUB_OUTPUT"
           echo "Target theme ID: $theme_id"
 
-      - name: DEBUG inspect blocks/text.liquid and sections/section.liquid
+      - name: DEBUG inspect live layout/theme.liquid head injection
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
-          for key in "blocks/text.liquid" "sections/section.liquid"; do
-            echo "=== $key ==="
-            curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=$key" -o /tmp/a.json
-            python3 -c "import json; d=json.load(open('/tmp/a.json')); print(d['asset']['value']) if 'asset' in d else print('ERROR/NOT FOUND:', d)"
-            echo
-          done
-          echo "=== all asset keys matching 'text' ==="
-          response=$(curl -s -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json")
-          echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); [print(a['key']) for a in data.get('assets', []) if 'text' in a['key'].lower() and ('block' in a['key'].lower() or 'snippet' in a['key'].lower() or 'section' in a['key'].lower())]"
+          curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=layout/theme.liquid" -o /tmp/theme_liquid.json
+          cat > /tmp/check_theme_liquid.py << 'PYEOF'
+          import json
+          d = json.load(open('/tmp/theme_liquid.json'))
+          content = d.get('asset', {}).get('value', '')
+          print('Length:', len(content))
+          idx = content.find('casa-di-mor-fonts')
+          print('casa-di-mor-fonts render found at index:', idx)
+          if idx >= 0:
+              print('Context:')
+              print(content[max(0, idx-200):idx+200])
+          head_close = content.find('</head>')
+          print('Position of </head>:', head_close)
+          print('Number of occurrences of casa-di-mor-fonts:', content.count('casa-di-mor-fonts'))
+          PYEOF
+          python3 /tmp/check_theme_liquid.py
         continue-on-error: true
 
       - name: Upload theme assets
