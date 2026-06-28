@@ -52,6 +52,16 @@
   --font-body-family: 'Jost', Helvetica, Arial, sans-serif !important;
   --font-body-style: normal !important;
   --font-body-weight: 300 !important;
+
+  /* ---- Newer theme architecture (Atelier/Horizon) variable overrides ---- */
+  --color-foreground: #42270f !important;
+  --color-foreground-heading: #42270f !important;
+  --color-background: #f2ede6 !important;
+  --color-primary: #748ebc !important;
+  --font-body--family: 'Jost', Helvetica, Arial, sans-serif !important;
+  --font-heading--family: 'Libre Baskerville', Georgia, serif !important;
+  --font-subheading--family: 'Libre Baskerville', Georgia, serif !important;
+  --font-accent--family: 'Pinyon Script', 'Cormorant Garamond', cursive !important;
 }
 
 /* ---- Re-apply brand colors inside Dawn's per-section color schemes ---- */
