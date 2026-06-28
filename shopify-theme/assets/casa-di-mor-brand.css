@@ -333,16 +333,12 @@ hr,
 }
 
 /* ---- "Productos" collection title -> "Verano Eterno" in script/blue ---- */
-.template-collection .title,
-.collection-hero__title,
-.main-collection-title {
+.text-block--text_tqQTNE {
   font-size: 0 !important;
   line-height: 0 !important;
 }
 
-.template-collection .title::after,
-.collection-hero__title::after,
-.main-collection-title::after {
+.text-block--text_tqQTNE::after {
   content: "Verano Eterno";
   display: inline-block;
   font-family: var(--cdm-font-script);
