@@ -333,9 +333,9 @@ hr,
 }
 
 /* ---- "Productos" collection title -> "Verano Eterno" in script/blue ---- */
-.text-block--text_tqQTNE {
-  font-size: 0 !important;
-  line-height: 0 !important;
+.text-block--text_tqQTNE h1,
+.text-block--text_tqQTNE h2 {
+  display: none !important;
 }
 
 .text-block--text_tqQTNE::after {
@@ -369,4 +369,3 @@ hr,
 .modal__content {
   background: var(--cdm-paper);
 }
-/* debug-trigger-3 */
