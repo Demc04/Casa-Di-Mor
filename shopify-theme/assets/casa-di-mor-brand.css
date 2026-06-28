@@ -322,6 +322,26 @@ hr,
   border-color: var(--cdm-sand-200);
 }
 
+/* ---- "Productos" collection title -> "Verano Eterno" in script/blue ---- */
+.template-collection .title,
+.collection-hero__title,
+.main-collection-title {
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+.template-collection .title::after,
+.collection-hero__title::after,
+.main-collection-title::after {
+  content: "Verano Eterno";
+  display: inline-block;
+  font-family: var(--cdm-font-script);
+  font-size: 3.4rem;
+  line-height: 1.1;
+  font-weight: 400;
+  color: #748ebc;
+}
+
 /* ---- Facets / filters ---- */
 .facets,
 .facets-vertical {
