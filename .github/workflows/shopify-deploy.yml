@@ -35,13 +35,6 @@ jobs:
           echo "theme_id=$theme_id" >> "$GITHUB_OUTPUT"
           echo "Target theme ID: $theme_id"
 
-      - name: DEBUG dump snippets/text.liquid
-        run: |
-          theme_id="${{ steps.theme.outputs.theme_id }}"
-          curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=snippets/text.liquid" -o /tmp/text.json
-          python3 -c "import json; print(json.load(open('/tmp/text.json'))['asset']['value'])" || cat /tmp/text.json
-        continue-on-error: true
-
       - name: Upload theme assets
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
