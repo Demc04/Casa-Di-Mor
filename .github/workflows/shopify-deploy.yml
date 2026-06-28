@@ -78,24 +78,6 @@ jobs:
             fi
           done
 
-      - name: DEBUG verify live CSS asset content and collection page link
-        run: |
-          theme_id="${{ steps.theme.outputs.theme_id }}"
-          echo "=== live casa-di-mor-brand.css (Admin API, just-uploaded) ==="
-          curl -s --globoff -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" -H "X-Shopify-Shop: $SHOPIFY_STORE" "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=assets/casa-di-mor-brand.css" -o /tmp/css.json
-          python3 -c "import json; v = json.load(open('/tmp/css.json'))['asset']['value']; i = v.find('Verano Eterno'); print('Verano Eterno found at offset', i); print(v[max(0,i-200):i+200] if i != -1 else 'NOT FOUND')"
-          echo
-          echo "=== fetching live collection page HTML ==="
-          http_code=$(curl -s -L -o /tmp/live.html -w "%{http_code}" "https://$SHOPIFY_STORE/collections/all" --max-time 20)
-          echo "HTTP $http_code, size $(wc -c < /tmp/live.html)"
-          echo "--- casa-di-mor-brand.css link tag ---"
-          grep -o '[^"'"'"']*casa-di-mor-brand\.css[^"'"'"']*' /tmp/live.html | head -3
-          echo "--- does page contain literal Productos? ---"
-          grep -o "Productos" /tmp/live.html | head -3
-          echo "--- does page contain password/opening-soon markers? ---"
-          grep -io "opening soon\|password-dialog" /tmp/live.html | head -3
-        continue-on-error: true
-
       - name: Remove obsolete theme assets
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
