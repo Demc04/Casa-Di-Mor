@@ -295,7 +295,7 @@ button.button:hover {
 .card__information *,
 .full-unstyled-link {
   font-family: var(--cdm-font-serif);
-  color: var(--cdm-espresso-900) !important;
+  color: var(--cdm-espresso) !important;
 }
 
 .price,
