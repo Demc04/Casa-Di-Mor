@@ -68,6 +68,14 @@
   --color-base-border: 192, 173, 153 !important;
 }
 
+/* ---- Force ivory background everywhere (Dawn per-section color schemes can re-declare the bg vars locally) ---- */
+html,
+body,
+main,
+#MainContent {
+  background-color: #f2ede6 !important;
+}
+
 /* ---- Base typography ---- */
 html,
 body,
