@@ -351,6 +351,16 @@ hr,
   color: #748ebc;
 }
 
+/* Reduce gap below the collection heading section */
+section:has([class*="text_tqQTNE"]) {
+  padding-block-end: 1rem !important;
+}
+
+[class*="text_tqQTNE"] {
+  margin-block-end: 0 !important;
+  padding-block-end: 0 !important;
+}
+
 /* ---- Facets / filters ---- */
 .facets,
 .facets-vertical {
