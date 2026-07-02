@@ -333,12 +333,13 @@ hr,
 }
 
 /* ---- "Productos" collection title -> "Verano Eterno" in script/blue ---- */
-.text-block--text_tqQTNE h1,
-.text-block--text_tqQTNE h2 {
+/* Atelier theme generates class like "text-{sectionId}__text_text_tqQTNE"; use attribute selector */
+[class*="text_tqQTNE"] h1,
+[class*="text_tqQTNE"] h2 {
   display: none !important;
 }
 
-.text-block--text_tqQTNE::after {
+[class*="text_tqQTNE"]::after {
   content: "Verano Eterno";
   display: inline-block;
   font-family: var(--cdm-font-script);
