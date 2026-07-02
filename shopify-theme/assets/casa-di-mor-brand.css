@@ -303,7 +303,9 @@ button.button:hover {
 .card-information *,
 .card__information,
 .card__information *,
-.full-unstyled-link {
+.full-unstyled-link,
+[class*="product_title"],
+[class*="product_title"] * {
   font-family: var(--cdm-font-serif);
   color: var(--cdm-espresso) !important;
 }
