@@ -223,27 +223,17 @@ button.button:hover {
   border-bottom: 1px solid var(--cdm-sand-200);
 }
 
-/* Sticky/scrolled header: espresso background */
-.header--sticky,
-.header[class*="sticky"],
-.header[class*="scrolled"],
-[class*="header"][class*="sticky"],
-[class*="header"][class*="scrolled"],
-header[style*="position: sticky"],
-header[style*="position:sticky"],
-.shopify-section-header-sticky .header,
-.header-wrapper--sticky .header,
-header:not([class*="transparent"]).header--has-scrolled {
+/* Scrolled header (loses [transparent] attr): espresso background */
+body:not(:has(.header[transparent])) .header-section .header,
+body:not(:has(.header[transparent])) .section-header {
   background: var(--cdm-espresso) !important;
   border-bottom-color: var(--cdm-espresso-600) !important;
 }
 
-.header--sticky .header__menu-item,
-.header--sticky .header__heading-link,
-[class*="header"][class*="sticky"] .header__menu-item,
-[class*="header"][class*="sticky"] .header__heading-link,
-.shopify-section-header-sticky .header__menu-item,
-.shopify-section-header-sticky .header__heading-link {
+body:not(:has(.header[transparent])) .header__menu-item,
+body:not(:has(.header[transparent])) .header__heading-link,
+body:not(:has(.header[transparent])) .header__menu-item a,
+body:not(:has(.header[transparent])) .header__icon {
   color: var(--cdm-ivory) !important;
 }
 
