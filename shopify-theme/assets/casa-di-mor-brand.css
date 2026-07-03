@@ -223,18 +223,22 @@ button.button:hover {
   border-bottom: 1px solid var(--cdm-sand-200);
 }
 
-/* Scrolled header (loses [transparent] attr): espresso background */
-body:not(:has(.header[transparent])) .header-section .header,
-body:not(:has(.header[transparent])) .section-header {
+/* Scrolled header: transparent="not-sticky" + data-sticky-state="active" */
+header-component[transparent="not-sticky"],
+header-component[data-sticky-state="active"] {
   background: var(--cdm-espresso) !important;
-  border-bottom-color: var(--cdm-espresso-600) !important;
 }
 
-body:not(:has(.header[transparent])) .header__menu-item,
-body:not(:has(.header[transparent])) .header__heading-link,
-body:not(:has(.header[transparent])) .header__menu-item a,
-body:not(:has(.header[transparent])) .header__icon {
+header-component[transparent="not-sticky"] .header__menu-item,
+header-component[transparent="not-sticky"] .header__heading-link,
+header-component[transparent="not-sticky"] .header__icon,
+header-component[transparent="not-sticky"] svg,
+header-component[data-sticky-state="active"] .header__menu-item,
+header-component[data-sticky-state="active"] .header__heading-link,
+header-component[data-sticky-state="active"] .header__icon,
+header-component[data-sticky-state="active"] svg {
   color: var(--cdm-ivory) !important;
+  fill: var(--cdm-ivory) !important;
 }
 
 .header__heading-link,
