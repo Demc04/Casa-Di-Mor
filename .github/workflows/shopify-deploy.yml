@@ -160,6 +160,29 @@ jobs:
             echo
           fi
 
+      - name: Ensure Nuestra Historia page exists
+        run: |
+          response=$(curl -s --globoff \
+            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
+            "$SHOPIFY_API_BASE/pages.json?handle=nuestra-historia")
+          count=$(echo "$response" | python3 -c "import sys, json; print(len(json.load(sys.stdin).get('pages', [])))")
+          echo "Pages found with handle nuestra-historia: $count"
+          if [ "$count" = "0" ]; then
+            echo "Creating page..."
+            http_code=$(curl -s -X POST \
+              -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+              -H "X-Shopify-Shop: $SHOPIFY_STORE" \
+              -H "Content-Type: application/json" \
+              -d '{"page": {"title": "Nuestra Historia", "handle": "nuestra-historia", "body_html": ""}}' \
+              "$SHOPIFY_API_BASE/pages.json" -o /tmp/page_response.json -w "%{http_code}")
+            echo "  -> $http_code"
+            cat /tmp/page_response.json
+          else
+            echo "Page already exists, skipping."
+          fi
+        continue-on-error: true
+
       - name: Replace site footer with Casa Di Mor footer section
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
