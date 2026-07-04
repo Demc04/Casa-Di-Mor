@@ -223,23 +223,6 @@ button.button:hover {
   border-bottom: 1px solid var(--cdm-sand-200);
 }
 
-/* Scrolled header: transparent="not-sticky" + data-sticky-state="active" */
-header-component[transparent="not-sticky"],
-header-component[data-sticky-state="active"] {
-  background: var(--cdm-espresso) !important;
-}
-
-header-component[transparent="not-sticky"] .header__menu-item,
-header-component[transparent="not-sticky"] .header__heading-link,
-header-component[transparent="not-sticky"] .header__icon,
-header-component[transparent="not-sticky"] svg,
-header-component[data-sticky-state="active"] .header__menu-item,
-header-component[data-sticky-state="active"] .header__heading-link,
-header-component[data-sticky-state="active"] .header__icon,
-header-component[data-sticky-state="active"] svg {
-  color: var(--cdm-ivory) !important;
-  fill: var(--cdm-ivory) !important;
-}
 
 .header__heading-link,
 .header__heading-logo-wrapper {

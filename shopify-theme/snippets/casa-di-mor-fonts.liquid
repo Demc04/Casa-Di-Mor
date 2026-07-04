@@ -6,24 +6,3 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ 'casa-di-mor-brand.css' | asset_url }}">
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  var hc = document.getElementById('header-component');
-  if (!hc) return;
-  function applyHeaderColor() {
-    var isSticky = hc.getAttribute('transparent') === 'not-sticky' ||
-                   hc.getAttribute('data-sticky-state') === 'active';
-    if (isSticky) {
-      hc.style.setProperty('--color-scheme-top-row', 'rgba(66 39 15 / 1.0)');
-      hc.style.setProperty('--color-scheme-bottom-row', 'rgba(66 39 15 / 1.0)');
-      hc.style.background = '#42270f';
-    } else {
-      hc.style.removeProperty('background');
-      hc.style.removeProperty('--color-scheme-top-row');
-      hc.style.removeProperty('--color-scheme-bottom-row');
-    }
-  }
-  new MutationObserver(applyHeaderColor).observe(hc, { attributes: true });
-  applyHeaderColor();
-});
-</script>
