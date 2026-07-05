@@ -384,3 +384,29 @@ section:has([class*="text_tqQTNE"]) {
 .cart-notification {
   background: var(--cdm-paper);
 }
+
+/* ---- Guía de Tallas: style richtext <p> rows as a grid table ---- */
+[class*="text_qLGEN9"] p {
+  display: grid;
+  grid-template-columns: 3rem 1fr 1fr 1fr;
+  gap: 0;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--cdm-sand-200);
+  font-family: var(--cdm-font-sans);
+  font-size: .82rem;
+  letter-spacing: .02em;
+}
+[class*="text_qLGEN9"] p strong {
+  display: contents;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .72rem;
+}
+[class*="text_qLGEN9"] p em {
+  grid-column: 1 / -1;
+  font-style: normal;
+  font-size: .72rem;
+  color: var(--cdm-espresso-500);
+  padding-top: 4px;
+}
