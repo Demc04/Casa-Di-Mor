@@ -380,6 +380,7 @@ section:has([class*="text_tqQTNE"]) {
 
 /* ---- Drawers / modals ---- */
 .drawer,
-.modal__content {
+.modal__content,
+.cart-notification {
   background: var(--cdm-paper);
 }
