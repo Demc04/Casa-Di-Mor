@@ -160,6 +160,50 @@ jobs:
             echo
           fi
 
+      - name: Rename Design block to Guia de Tallas in product template
+        run: |
+          theme_id="${{ steps.theme.outputs.theme_id }}"
+          response=$(curl -s --globoff \
+            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
+            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/product.json")
+          cat > /tmp/patch_product.py << 'PYEOF'
+          import json, sys
+          d = json.load(sys.stdin)
+          content = d.get('asset', {}).get('value', '')
+          if not content:
+              print('ERROR: no content', file=sys.stderr)
+              sys.exit(1)
+          data = json.loads(content)
+          changed = 0
+          for section in data.get('sections', {}).values():
+              for block in section.get('blocks', {}).values():
+                  s = block.get('settings', {})
+                  heading = s.get('heading', '')
+                  if isinstance(heading, str) and heading.lower() in ('design', 'diseño', 'diseno'):
+                      s['heading'] = 'Guía de Tallas'
+                      changed += 1
+          print(f'Changed {changed} blocks', file=sys.stderr)
+          print(json.dumps(data))
+          PYEOF
+          updated=$(echo "$response" | python3 /tmp/patch_product.py)
+          if [ $? -ne 0 ]; then
+            echo "Patch failed or nothing to change"
+            exit 0
+          fi
+          payload=$(python3 -c "import sys, json; content = sys.stdin.read(); print(json.dumps({'asset': {'key': 'templates/product.json', 'value': content}}))" <<< "$updated")
+          http_code=$(curl -s -X PUT \
+            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
+            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /tmp/response.json -w "%{http_code}")
+          echo "  -> $http_code"
+          if [ "$http_code" != "200" ]; then
+            cat /tmp/response.json
+          fi
+        continue-on-error: true
+
       - name: Ensure Nuestra Historia page exists
         run: |
           response=$(curl -s --globoff \
