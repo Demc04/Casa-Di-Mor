@@ -160,91 +160,23 @@ jobs:
             echo
           fi
 
-      - name: DEBUG dump product template blocks
-        run: |
-          theme_id="${{ steps.theme.outputs.theme_id }}"
-          curl -s --globoff \
-            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
-            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
-            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/product.json" \
-            -o /tmp/product_tpl.json
-          cat > /tmp/dump_blocks.py << 'PYEOF'
-          import sys, json
-          d = json.load(open('/tmp/product_tpl.json'))
-          data = json.loads(d['asset']['value'])
-          for sk, sec in data.get('sections', {}).items():
-              print(f'SECTION {sk}: type={sec.get("type")}')
-              for bk, blk in sec.get('blocks', {}).items():
-                  print(f'  BLOCK {bk}: type={blk.get("type")} settings={json.dumps(blk.get("settings",{}))}')
-          PYEOF
-          python3 /tmp/dump_blocks.py
-        continue-on-error: true
-
-      - name: Rename Design block to Guia de Tallas in product template
+      - name: Patch Design accordion to Guia de Tallas in blocks/_product-details.liquid
         run: |
           theme_id="${{ steps.theme.outputs.theme_id }}"
           response=$(curl -s --globoff \
             -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
             -H "X-Shopify-Shop: $SHOPIFY_STORE" \
-            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=templates/product.json")
-          cat > /tmp/patch_product.py << 'PYEOF'
-          import json, sys
-          d = json.load(sys.stdin)
-          content = d.get('asset', {}).get('value', '')
-          if not content:
-              print('ERROR: no content', file=sys.stderr)
-              sys.exit(1)
-          data = json.loads(content)
-          changed = 0
-          for section in data.get('sections', {}).values():
-              for block in section.get('blocks', {}).values():
-                  s = block.get('settings', {})
-                  heading = s.get('heading', '')
-                  if isinstance(heading, str) and heading.lower() in ('design', 'diseño', 'diseno'):
-                      s['heading'] = 'Guía de Tallas'
-                      changed += 1
-          print(f'Changed {changed} blocks', file=sys.stderr)
-          print(json.dumps(data))
-          PYEOF
-          updated=$(echo "$response" | python3 /tmp/patch_product.py)
-          if [ $? -ne 0 ]; then
-            echo "Patch failed or nothing to change"
+            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json?asset[key]=blocks/_product-details.liquid")
+          echo "HTTP response keys: $(echo "$response" | python3 -c 'import sys,json; d=json.load(sys.stdin); print(list(d.keys()))')"
+          current=$(echo "$response" | python3 -c "import sys, json; print(json.load(sys.stdin)['asset']['value'])")
+          if [ -z "$current" ]; then
+            echo "Could not fetch blocks/_product-details.liquid"
             exit 0
           fi
-          payload=$(python3 -c "import sys, json; content = sys.stdin.read(); print(json.dumps({'asset': {'key': 'templates/product.json', 'value': content}}))" <<< "$updated")
-          http_code=$(curl -s -X PUT \
-            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
-            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
-            -H "Content-Type: application/json" \
-            -d "$payload" \
-            "$SHOPIFY_API_BASE/themes/$theme_id/assets.json" -o /tmp/response.json -w "%{http_code}")
-          echo "  -> $http_code"
-          if [ "$http_code" != "200" ]; then
-            cat /tmp/response.json
-          fi
-        continue-on-error: true
-
-      - name: Ensure Nuestra Historia page exists
-        run: |
-          response=$(curl -s --globoff \
-            -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
-            -H "X-Shopify-Shop: $SHOPIFY_STORE" \
-            "$SHOPIFY_API_BASE/pages.json?handle=nuestra-historia")
-          count=$(echo "$response" | python3 -c "import sys, json; print(len(json.load(sys.stdin).get('pages', [])))")
-          echo "Pages found with handle nuestra-historia: $count"
-          if [ "$count" = "0" ]; then
-            echo "Creating page..."
-            http_code=$(curl -s -X POST \
-              -H "X-Shopify-Access-Token: $SHOPIFY_ACCESS_TOKEN" \
-              -H "X-Shopify-Shop: $SHOPIFY_STORE" \
-              -H "Content-Type: application/json" \
-              -d '{"page": {"title": "Nuestra Historia", "handle": "nuestra-historia", "body_html": ""}}' \
-              "$SHOPIFY_API_BASE/pages.json" -o /tmp/page_response.json -w "%{http_code}")
-            echo "  -> $http_code"
-            cat /tmp/page_response.json
-          else
-            echo "Page already exists, skipping."
-          fi
+          echo "--- First 60 lines of blocks/_product-details.liquid ---"
+          echo "$current" | head -60
+          echo "--- Searching for Design/accordion references ---"
+          echo "$current" | grep -in "design\|accordion\|heading\|label\|tab" | head -30
         continue-on-error: true
 
       - name: Replace site footer with Casa Di Mor footer section
