@@ -385,28 +385,31 @@ section:has([class*="text_tqQTNE"]) {
   background: var(--cdm-paper);
 }
 
-/* ---- Guía de Tallas: style richtext <p> rows as a grid table ---- */
-[class*="text_qLGEN9"] p {
-  display: grid;
-  grid-template-columns: 3rem 1fr 1fr 1fr;
-  gap: 0;
-  padding: 5px 0;
-  border-bottom: 1px solid var(--cdm-sand-200);
+/* ---- Guía de Tallas size guide table ---- */
+.cdm-sg {
+  width: 100%;
+  border-collapse: collapse;
   font-family: var(--cdm-font-sans);
   font-size: .82rem;
-  letter-spacing: .02em;
+  color: var(--cdm-espresso);
 }
-[class*="text_qLGEN9"] p strong {
-  display: contents;
+.cdm-sg th {
+  text-align: left;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: .1em;
-  font-size: .72rem;
+  letter-spacing: .12em;
+  font-size: .7rem;
+  padding: 6px 12px 6px 0;
+  border-bottom: 1px solid var(--cdm-sand);
+  color: var(--cdm-espresso-600);
 }
-[class*="text_qLGEN9"] p em {
-  grid-column: 1 / -1;
-  font-style: normal;
+.cdm-sg td {
+  padding: 7px 12px 7px 0;
+  border-bottom: 1px solid var(--cdm-sand-200);
+}
+.cdm-sg-note {
+  margin-top: 10px;
   font-size: .72rem;
   color: var(--cdm-espresso-500);
-  padding-top: 4px;
+  font-style: italic;
 }
