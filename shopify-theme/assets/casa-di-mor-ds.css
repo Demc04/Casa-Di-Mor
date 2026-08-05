@@ -309,6 +309,12 @@ header-component#header-component[data-sticky-state="inactive"] .header__row{
 .bq-link:hover{ letter-spacing:.26em; }
 @media (max-width: 860px){ .bq-grid{ grid-template-columns:1fr 1fr; } .bq-split{ grid-template-columns:1fr; } }
 
+@media (max-width: 749px){
+  .cdm-figure--hero{ aspect-ratio: unset !important; min-height: 82svh; }
+  .cdm-figure--hero .cdm-figure__img{ height: 82svh; }
+  .cdm-figure__content{ padding: var(--space-5); }
+}
+
 /* ---- Animated walking jaguar mark (see snippets/cdm-jaguar-walk.liquid) ---- */
 .cdm-jaguar-walk{ display:flex; justify-content:center; padding: var(--space-5) 0; background: var(--bg); }
 .cdm-jaguar-walk__stage{ width: 280px; }

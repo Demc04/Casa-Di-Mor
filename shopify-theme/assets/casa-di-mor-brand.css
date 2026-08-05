@@ -414,29 +414,3 @@ section:has([class*="text_tqQTNE"]) {
   font-style: italic;
 }
 
-/* ---- Hero / banner: taller on mobile ---- */
-@media screen and (max-width: 749px) {
-  .banner,
-  .slideshow,
-  .hero,
-  [class*="slideshow"],
-  [class*="banner"] {
-    min-height: 85svh !important;
-  }
-
-  .banner__media,
-  .slideshow__media,
-  [class*="slideshow__media"],
-  [class*="banner__media"] {
-    min-height: 85svh !important;
-  }
-
-  .banner__media img,
-  .slideshow__media img,
-  [class*="slideshow__media"] img,
-  [class*="banner__media"] img {
-    height: 85svh !important;
-    object-fit: cover !important;
-    object-position: center top !important;
-  }
-}
