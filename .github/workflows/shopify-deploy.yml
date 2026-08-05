@@ -43,6 +43,7 @@ jobs:
             ["shopify-theme/assets/casa-di-mor-brand.css"]="assets/casa-di-mor-brand.css"
             ["shopify-theme/assets/casa-di-mor-ds.css"]="assets/casa-di-mor-ds.css"
             ["shopify-theme/assets/cdm-editorial-sea-gown.jpg"]="assets/cdm-editorial-sea-gown.jpg"
+            ["shopify-theme/assets/Tezza-6686.jpg"]="assets/Tezza-6686.jpg"
             ["shopify-theme/assets/cdm-editorial-beach-group.jpg"]="assets/cdm-editorial-beach-group.jpg"
             ["shopify-theme/assets/cdm-lifestyle-garden.jpg"]="assets/cdm-lifestyle-garden.jpg"
             ["shopify-theme/assets/cdm-key-espresso.png"]="assets/cdm-key-espresso.png"
